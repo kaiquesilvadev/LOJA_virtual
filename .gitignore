@@ -32,5 +32,5 @@ build/
 ### VS Code ###
 .vscode/
 
-### VS Code ###
+### db criado pelo docker ###
 /.data/postgresql/data
