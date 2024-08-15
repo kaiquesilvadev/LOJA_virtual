@@ -45,17 +45,22 @@ public class Produto {
 	@ManyToOne
 	private MarcaProduto marcaProduto;
 
+	@ManyToOne
+	private CategoriaProduto categoriaProduto;
+
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.REMOVE)
 	private List<ImagemProduto> imagemProdutos = new ArrayList<>();
 
-	/* TODO ainda falta 4 mapeamento com outras classes */
+	/* TODO ainda falta 3 mapeamento com outras classes */
 
 	public Produto() {
 	}
 
 	public Produto(Long id, String tipoUnidade, String nome, String descricao, Double peso, Double largura,
 			Double autura, Double profundidade, BigDecimal valorVenda, Integer qtdEstoque, Integer qtdeAletaEstoque,
-			String linkTouTuber, Boolean alertaQtdEstoque, Integer qtdCliente, MarcaProduto marcaProduto) {
+			String linkTouTuber, Boolean alertaQtdEstoque, Integer qtdCliente, MarcaProduto marcaProduto,
+			CategoriaProduto categoriaProduto) {
+		super();
 		this.id = id;
 		this.tipoUnidade = tipoUnidade;
 		this.nome = nome;
@@ -71,6 +76,7 @@ public class Produto {
 		this.alertaQtdEstoque = alertaQtdEstoque;
 		this.qtdCliente = qtdCliente;
 		this.marcaProduto = marcaProduto;
+		this.categoriaProduto = categoriaProduto;
 	}
 
 	public Long getId() {
@@ -191,6 +197,14 @@ public class Produto {
 
 	public void setMarcaProduto(MarcaProduto marcaProduto) {
 		this.marcaProduto = marcaProduto;
+	}
+
+	public CategoriaProduto getCategoriaProduto() {
+		return categoriaProduto;
+	}
+
+	public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
+		this.categoriaProduto = categoriaProduto;
 	}
 
 	public List<ImagemProduto> getImagemProdutos() {
