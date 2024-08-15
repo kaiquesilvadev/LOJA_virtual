@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,13 +24,13 @@ public class ImagemProduto {
 	@Column(columnDefinition = "TEXT")
 	private String imagemMiniatura;
 
-	/* TODO ; implementar relacionamento com produto */
+	@ManyToOne
+	private Produto produto;
 
 	public ImagemProduto() {
 	}
 
 	public ImagemProduto(Long id, String imagemOriginal, String imagemMiniatura) {
-		super();
 		this.id = id;
 		this.imagemOriginal = imagemOriginal;
 		this.imagemMiniatura = imagemMiniatura;
@@ -57,6 +58,14 @@ public class ImagemProduto {
 
 	public void setImagemMiniatura(String imagemMiniatura) {
 		this.imagemMiniatura = imagemMiniatura;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
 	@Override
