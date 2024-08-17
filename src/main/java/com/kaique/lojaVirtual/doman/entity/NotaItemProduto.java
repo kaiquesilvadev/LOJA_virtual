@@ -2,7 +2,6 @@ package com.kaique.lojaVirtual.doman.entity;
 
 import java.util.Objects;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,30 +11,30 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_imagem_produto")
-public class ImagemProduto {
+@Table(name = "tb_nota_fiscal_compra")
+public class NotaItemProduto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Double quantidade;
 
-	@Column(columnDefinition = "TEXT")
-	private String imagemOriginal;
-
-	@Column(columnDefinition = "TEXT")
-	private String imagemMiniatura;
+	@JoinColumn(name = "notaFiscalCompra_id")
+	@ManyToOne
+	private NotaFiscalCompra notaFiscalCompra;
 
 	@JoinColumn(name = "produto_id")
 	@ManyToOne
 	private Produto produto;
 
-	public ImagemProduto() {
+	public NotaItemProduto() {
 	}
 
-	public ImagemProduto(Long id, String imagemOriginal, String imagemMiniatura) {
+	public NotaItemProduto(Long id, Double quantidade, NotaFiscalCompra notaFiscalCompra, Produto produto) {
 		this.id = id;
-		this.imagemOriginal = imagemOriginal;
-		this.imagemMiniatura = imagemMiniatura;
+		this.quantidade = quantidade;
+		this.notaFiscalCompra = notaFiscalCompra;
+		this.produto = produto;
 	}
 
 	public Long getId() {
@@ -46,20 +45,20 @@ public class ImagemProduto {
 		this.id = id;
 	}
 
-	public String getImagemOriginal() {
-		return imagemOriginal;
+	public Double getQuantidade() {
+		return quantidade;
 	}
 
-	public void setImagemOriginal(String imagemOriginal) {
-		this.imagemOriginal = imagemOriginal;
+	public void setQuantidade(Double quantidade) {
+		this.quantidade = quantidade;
 	}
 
-	public String getImagemMiniatura() {
-		return imagemMiniatura;
+	public NotaFiscalCompra getNotaFiscalCompra() {
+		return notaFiscalCompra;
 	}
 
-	public void setImagemMiniatura(String imagemMiniatura) {
-		this.imagemMiniatura = imagemMiniatura;
+	public void setNotaFiscalCompra(NotaFiscalCompra notaFiscalCompra) {
+		this.notaFiscalCompra = notaFiscalCompra;
 	}
 
 	public Produto getProduto() {
@@ -83,7 +82,7 @@ public class ImagemProduto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ImagemProduto other = (ImagemProduto) obj;
+		NotaItemProduto other = (NotaItemProduto) obj;
 		return Objects.equals(id, other.id);
 	}
 

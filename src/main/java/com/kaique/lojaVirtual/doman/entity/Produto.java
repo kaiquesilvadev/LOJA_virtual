@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -42,9 +43,11 @@ public class Produto {
 	private Boolean alertaQtdEstoque;
 	private Integer qtdCliente;
 
+	@JoinColumn(name = "marca_produto_id")
 	@ManyToOne
 	private MarcaProduto marcaProduto;
 
+	@JoinColumn(name = "categoria_produto_id")
 	@ManyToOne
 	private CategoriaProduto categoriaProduto;
 
