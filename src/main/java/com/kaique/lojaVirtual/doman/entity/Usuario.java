@@ -24,7 +24,7 @@ import jakarta.persistence.TemporalType;
 @Table(name = "tb_usuario")
 public class Usuario implements UserDetails {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -41,7 +41,7 @@ public class Usuario implements UserDetails {
 
 	@ManyToOne
 	private Pessoa pessoa;
-	
+
 	@OneToMany(cascade = CascadeType.REMOVE)
 	private List<Acesso> acessos = new ArrayList<>();
 
@@ -55,7 +55,7 @@ public class Usuario implements UserDetails {
 		this.data_atua_senha = data_atua_senha;
 		this.pessoa = pessoa;
 	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return acessos;
