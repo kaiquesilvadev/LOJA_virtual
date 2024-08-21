@@ -14,6 +14,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -24,7 +25,7 @@ import jakarta.persistence.TemporalType;
 @Table(name = "tb_usuario")
 public class Usuario implements UserDetails {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -39,9 +40,10 @@ public class Usuario implements UserDetails {
 	@Temporal(TemporalType.DATE)
 	private Date data_atua_senha;
 
+	@JoinColumn(name = "pessoa_id")
 	@ManyToOne
 	private Pessoa pessoa;
-	
+
 	@OneToMany(cascade = CascadeType.REMOVE)
 	private List<Acesso> acessos = new ArrayList<>();
 
@@ -55,7 +57,7 @@ public class Usuario implements UserDetails {
 		this.data_atua_senha = data_atua_senha;
 		this.pessoa = pessoa;
 	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return acessos;

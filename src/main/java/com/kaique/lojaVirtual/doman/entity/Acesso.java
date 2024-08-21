@@ -21,11 +21,9 @@ public class Acesso implements GrantedAuthority {
 	private String descricao;
 
 	public Acesso() {
-		super();
 	}
 
 	public Acesso(Long id, String descricao) {
-		super();
 		this.id = id;
 		this.descricao = descricao;
 	}
