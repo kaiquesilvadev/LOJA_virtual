@@ -43,7 +43,6 @@ public class NotaFiscalCompra {
 	private List<NotaItemProduto> notaItemProdutos = new ArrayList<>();
 
 	public NotaFiscalCompra() {
-		super();
 	}
 
 	public NotaFiscalCompra(Long id, String numeroNota, String serieNota, String descricaoOds, BigDecimal valorTotal,
