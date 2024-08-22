@@ -32,13 +32,15 @@ public class ContaReceber {
 	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 
-	/* TODO : ainda falta um mapeamento */
+	@ManyToOne
+	@JoinColumn(name = "empresa_id")
+	private Pessoa empresa;
 
 	public ContaReceber() {
 	}
 
 	public ContaReceber(Long id, String drescricao, StatusContaReceber status, Date dtVencimento, Date dtPagamento,
-			BigDecimal valortotal, BigDecimal valorDescontos, Pessoa pessoa) {
+			BigDecimal valortotal, BigDecimal valorDescontos, Pessoa pessoa, Pessoa empresa) {
 		this.id = id;
 		this.drescricao = drescricao;
 		this.status = status;
@@ -47,6 +49,7 @@ public class ContaReceber {
 		this.valortotal = valortotal;
 		this.valorDescontos = valorDescontos;
 		this.pessoa = pessoa;
+		this.empresa = empresa;
 	}
 
 	public Long getId() {
@@ -111,6 +114,14 @@ public class ContaReceber {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
 	}
 
 	@Override

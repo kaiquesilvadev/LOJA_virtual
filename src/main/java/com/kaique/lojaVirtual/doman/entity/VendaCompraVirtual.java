@@ -31,8 +31,7 @@ public class VendaCompraVirtual {
 
 	@ManyToOne
 	private Endereco enderecoCobranca;
-
-	private BigDecimal valortotal;
+	private BigDecimal valorTotal;
 	private BigDecimal valorDesconto;
 
 	@ManyToOne
@@ -43,9 +42,8 @@ public class VendaCompraVirtual {
 
 	@ManyToOne
 	private CupomDesconto cupomDesconto;
-
-	private BigDecimal valorfrete;
-	private Integer diasentrega;
+	private BigDecimal valorFrete;
+	private Integer diasEntrega;
 	private Date dataVenda;
 	private String urlImprimeEtiqueta;
 
@@ -56,20 +54,20 @@ public class VendaCompraVirtual {
 	}
 
 	public VendaCompraVirtual(Long id, Pessoa pessoa, Endereco enderecoEntrega, Endereco enderecoCobranca,
-			BigDecimal valortotal, BigDecimal valorDesconto, FormaPagamento formaPagamento,
-			NotaFiscalVenda notaFiscalVenda, CupomDesconto cupomDesconto, BigDecimal valorfrete, Integer diasentrega,
+			BigDecimal valorTotal, BigDecimal valorDesconto, FormaPagamento formaPagamento,
+			NotaFiscalVenda notaFiscalVenda, CupomDesconto cupomDesconto, BigDecimal valorFrete, Integer diasEntrega,
 			Date dataVenda, String urlImprimeEtiqueta, StatusVendaLojaVirtual statusVendaLojaVirtual) {
 		this.id = id;
 		this.pessoa = pessoa;
 		this.enderecoEntrega = enderecoEntrega;
 		this.enderecoCobranca = enderecoCobranca;
-		this.valortotal = valortotal;
+		this.valorTotal = valorTotal;
 		this.valorDesconto = valorDesconto;
 		this.formaPagamento = formaPagamento;
 		this.notaFiscalVenda = notaFiscalVenda;
 		this.cupomDesconto = cupomDesconto;
-		this.valorfrete = valorfrete;
-		this.diasentrega = diasentrega;
+		this.valorFrete = valorFrete;
+		this.diasEntrega = diasEntrega;
 		this.dataVenda = dataVenda;
 		this.urlImprimeEtiqueta = urlImprimeEtiqueta;
 		this.statusVendaLojaVirtual = statusVendaLojaVirtual;
@@ -107,12 +105,12 @@ public class VendaCompraVirtual {
 		this.enderecoCobranca = enderecoCobranca;
 	}
 
-	public BigDecimal getValortotal() {
-		return valortotal;
+	public BigDecimal getValorTotal() {
+		return valorTotal;
 	}
 
-	public void setValortotal(BigDecimal valortotal) {
-		this.valortotal = valortotal;
+	public void setValorTotal(BigDecimal valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 
 	public BigDecimal getValorDesconto() {
@@ -147,20 +145,20 @@ public class VendaCompraVirtual {
 		this.cupomDesconto = cupomDesconto;
 	}
 
-	public BigDecimal getValorfrete() {
-		return valorfrete;
+	public BigDecimal getValorFrete() {
+		return valorFrete;
 	}
 
-	public void setValorfrete(BigDecimal valorfrete) {
-		this.valorfrete = valorfrete;
+	public void setValorFrete(BigDecimal valorFrete) {
+		this.valorFrete = valorFrete;
 	}
 
-	public Integer getDiasentrega() {
-		return diasentrega;
+	public Integer getDiasEntrega() {
+		return diasEntrega;
 	}
 
-	public void setDiasentrega(Integer diasentrega) {
-		this.diasentrega = diasentrega;
+	public void setDiasEntrega(Integer diasEntrega) {
+		this.diasEntrega = diasEntrega;
 	}
 
 	public Date getDataVenda() {
@@ -203,5 +201,4 @@ public class VendaCompraVirtual {
 		VendaCompraVirtual other = (VendaCompraVirtual) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }
