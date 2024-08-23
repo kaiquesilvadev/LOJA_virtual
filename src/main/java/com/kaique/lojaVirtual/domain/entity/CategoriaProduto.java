@@ -1,4 +1,4 @@
-package com.kaique.lojaVirtual.doman.entity;
+package com.kaique.lojaVirtual.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,21 +12,22 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_marca_produto")
-public class MarcaProduto {
+@Table(name = "tb_categoria_produto")
+public class CategoriaProduto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nomeDesc;
-	
-	@OneToMany(mappedBy = "marcaProduto")
+
+	@OneToMany(mappedBy = "categoriaProduto")
 	private List<Produto> produtos = new ArrayList<>();
 
-	public MarcaProduto() {
+	public CategoriaProduto() {
+
 	}
 
-	public MarcaProduto(Long id, String nomeDesc) {
+	public CategoriaProduto(Long id, String nomeDesc) {
 		this.id = id;
 		this.nomeDesc = nomeDesc;
 	}
@@ -47,6 +48,10 @@ public class MarcaProduto {
 		this.nomeDesc = nomeDesc;
 	}
 
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -60,7 +65,8 @@ public class MarcaProduto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MarcaProduto other = (MarcaProduto) obj;
+		CategoriaProduto other = (CategoriaProduto) obj;
 		return Objects.equals(id, other.id);
 	}
+
 }

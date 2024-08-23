@@ -1,11 +1,12 @@
-package com.kaique.lojaVirtual.doman.enuns;
+package com.kaique.lojaVirtual.domain.enuns;
 
 public enum StatusContaReceber {
 	
 	COBRANCA("Pagar"),
 	VENCIDA("Vencida"),
 	ABERTA("Aberta"),
-	QUITADA("Quitada");
+	QUITADA("Quitada"),
+	RENEGOCIADA("Renegociada");
 	
 	
 	private String descricao;

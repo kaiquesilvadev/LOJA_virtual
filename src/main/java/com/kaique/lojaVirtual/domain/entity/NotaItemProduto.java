@@ -1,4 +1,4 @@
-package com.kaique.lojaVirtual.doman.entity;
+package com.kaique.lojaVirtual.domain.entity;
 
 import java.util.Objects;
 
@@ -19,7 +19,7 @@ public class NotaItemProduto {
 	private Long id;
 	private Double quantidade;
 
-	@JoinColumn(name = "notaFiscalCompra_id")
+	@JoinColumn(name = "nota_fiscal_compra_id")
 	@ManyToOne
 	private NotaFiscalCompra notaFiscalCompra;
 

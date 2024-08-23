@@ -1,35 +1,36 @@
-package com.kaique.lojaVirtual.doman.entity;
+package com.kaique.lojaVirtual.domain.entity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_categoria_produto")
-public class CategoriaProduto {
-
+@Table(name = "tb_acesso")
+public class Acesso implements GrantedAuthority {
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nomeDesc;
+	private String descricao;
 
-	@OneToMany(mappedBy = "categoriaProduto")
-	private List<Produto> produtos = new ArrayList<>();
-
-	public CategoriaProduto() {
-
+	public Acesso() {
 	}
 
-	public CategoriaProduto(Long id, String nomeDesc) {
+	public Acesso(Long id, String descricao) {
 		this.id = id;
-		this.nomeDesc = nomeDesc;
+		this.descricao = descricao;
+	}
+
+	@Override
+	public String getAuthority() {
+		return descricao;
 	}
 
 	public Long getId() {
@@ -40,16 +41,12 @@ public class CategoriaProduto {
 		this.id = id;
 	}
 
-	public String getNomeDesc() {
-		return nomeDesc;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setNomeDesc(String nomeDesc) {
-		this.nomeDesc = nomeDesc;
-	}
-
-	public List<Produto> getProdutos() {
-		return produtos;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override
@@ -65,8 +62,7 @@ public class CategoriaProduto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoriaProduto other = (CategoriaProduto) obj;
+		Acesso other = (Acesso) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }

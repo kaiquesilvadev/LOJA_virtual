@@ -1,12 +1,14 @@
-package com.kaique.lojaVirtual.doman.entity;
+package com.kaique.lojaVirtual.domain.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Objects;
 
-import com.kaique.lojaVirtual.doman.enuns.StatusContaReceber;
+import com.kaique.lojaVirtual.domain.enuns.StatusContaReceber;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,7 +23,9 @@ public class ContaReceber {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String drescricao;
+	private String descricao;
+	
+	@Enumerated(EnumType.STRING)
 	private StatusContaReceber status;
 	private Date dtVencimento;
 	private Date dtPagamento;
@@ -39,10 +43,10 @@ public class ContaReceber {
 	public ContaReceber() {
 	}
 
-	public ContaReceber(Long id, String drescricao, StatusContaReceber status, Date dtVencimento, Date dtPagamento,
+	public ContaReceber(Long id, String descricao, StatusContaReceber status, Date dtVencimento, Date dtPagamento,
 			BigDecimal valortotal, BigDecimal valorDescontos, Pessoa pessoa, Pessoa empresa) {
 		this.id = id;
-		this.drescricao = drescricao;
+		this.descricao = descricao;
 		this.status = status;
 		this.dtVencimento = dtVencimento;
 		this.dtPagamento = dtPagamento;
@@ -60,12 +64,12 @@ public class ContaReceber {
 		this.id = id;
 	}
 
-	public String getDrescricao() {
-		return drescricao;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setDrescricao(String drescricao) {
-		this.drescricao = drescricao;
+	public void setDescricao(String drescricao) {
+		this.descricao = drescricao;
 	}
 
 	public StatusContaReceber getStatus() {

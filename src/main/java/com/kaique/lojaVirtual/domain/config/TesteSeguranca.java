@@ -1,4 +1,4 @@
-package com.kaique.lojaVirtual.doman.config;
+package com.kaique.lojaVirtual.domain.config;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
