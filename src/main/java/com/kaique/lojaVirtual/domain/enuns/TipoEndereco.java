@@ -1,4 +1,4 @@
-package com.kaique.lojaVirtual.doman.enuns;
+package com.kaique.lojaVirtual.domain.enuns;
 
 public enum TipoEndereco {
 	

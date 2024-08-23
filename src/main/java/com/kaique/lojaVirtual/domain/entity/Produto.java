@@ -1,4 +1,4 @@
-package com.kaique.lojaVirtual.doman.entity;
+package com.kaique.lojaVirtual.domain.entity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import java.util.Objects;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,8 +31,9 @@ public class Produto {
 	@Column(columnDefinition = "TEXT")
 	private String descricao;
 
-	/* implementar mapeamento com nota item produto aqui */
-
+	@ManyToOne
+	@JoinColumn(name = "nota_item_produto")
+	private NotaItemProduto notaItemProduto;
 	private Double peso;
 	private Double largura;
 	private Double autura;
@@ -43,31 +45,32 @@ public class Produto {
 	private Boolean alertaQtdEstoque;
 	private Integer qtdCliente;
 
-	@JoinColumn(name = "marca_produto_id")
 	@ManyToOne
+	@JoinColumn(name = "marca_produto_id")
 	private MarcaProduto marcaProduto;
 
-	@JoinColumn(name = "categoria_produto_id")
 	@ManyToOne
+	@JoinColumn(name = "categoria_produto_id")
 	private CategoriaProduto categoriaProduto;
 
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<ImagemProduto> imagemProdutos = new ArrayList<>();
 
-	/* TODO ainda falta 3 mapeamento com outras classes */
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	private List<AvaliacaoProduto> avaliacoes = new ArrayList<>();
 
 	public Produto() {
 	}
 
-	public Produto(Long id, String tipoUnidade, String nome, String descricao, Double peso, Double largura,
-			Double autura, Double profundidade, BigDecimal valorVenda, Integer qtdEstoque, Integer qtdeAletaEstoque,
-			String linkTouTuber, Boolean alertaQtdEstoque, Integer qtdCliente, MarcaProduto marcaProduto,
-			CategoriaProduto categoriaProduto) {
-		super();
+	public Produto(Long id, String tipoUnidade, String nome, String descricao, NotaItemProduto notaItemProduto,
+			Double peso, Double largura, Double autura, Double profundidade, BigDecimal valorVenda, Integer qtdEstoque,
+			Integer qtdeAletaEstoque, String linkTouTuber, Boolean alertaQtdEstoque, Integer qtdCliente,
+			MarcaProduto marcaProduto, CategoriaProduto categoriaProduto) {
 		this.id = id;
 		this.tipoUnidade = tipoUnidade;
 		this.nome = nome;
 		this.descricao = descricao;
+		this.notaItemProduto = notaItemProduto;
 		this.peso = peso;
 		this.largura = largura;
 		this.autura = autura;
@@ -112,6 +115,14 @@ public class Produto {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public NotaItemProduto getNotaItemProduto() {
+		return notaItemProduto;
+	}
+
+	public void setNotaItemProduto(NotaItemProduto notaItemProduto) {
+		this.notaItemProduto = notaItemProduto;
 	}
 
 	public Double getPeso() {
@@ -212,6 +223,10 @@ public class Produto {
 
 	public List<ImagemProduto> getImagemProdutos() {
 		return imagemProdutos;
+	}
+
+	public List<AvaliacaoProduto> getAvaliacoes() {
+		return avaliacoes;
 	}
 
 	@Override

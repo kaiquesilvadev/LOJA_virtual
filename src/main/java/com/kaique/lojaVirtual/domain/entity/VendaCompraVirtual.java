@@ -1,10 +1,10 @@
-package com.kaique.lojaVirtual.doman.entity;
+package com.kaique.lojaVirtual.domain.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Objects;
 
-import com.kaique.lojaVirtual.doman.enuns.StatusVendaLojaVirtual;
+import com.kaique.lojaVirtual.domain.enuns.StatusVendaLojaVirtual;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -24,23 +25,29 @@ public class VendaCompraVirtual {
 	private Long id;
 
 	@ManyToOne
+	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 
 	@ManyToOne
+	@JoinColumn(name = "endereco_entrega_id")
 	private Endereco enderecoEntrega;
 
-	@ManyToOne
+	@ManyToOne	
+	@JoinColumn(name = "endereco_cobranca_id")
 	private Endereco enderecoCobranca;
 	private BigDecimal valorTotal;
 	private BigDecimal valorDesconto;
 
 	@ManyToOne
+	@JoinColumn(name = "forma_pagamento_id")
 	private FormaPagamento formaPagamento;
 
 	@ManyToOne
+	@JoinColumn(name = "nota_fiscal_venda_id")
 	private NotaFiscalVenda notaFiscalVenda;
 
 	@ManyToOne
+	@JoinColumn(name = "cupom_desconto_id")
 	private CupomDesconto cupomDesconto;
 	private BigDecimal valorFrete;
 	private Integer diasEntrega;

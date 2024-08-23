@@ -1,4 +1,4 @@
-package com.kaique.lojaVirtual.doman.entity;
+package com.kaique.lojaVirtual.domain.entity;
 
 import java.util.Objects;
 
@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -28,6 +29,7 @@ public class NotaFiscalVenda {
 	private String pdf;
 
 	@OneToOne
+	@JoinColumn(name = "venda_compra_virtual_id")
 	private VendaCompraVirtual vendaCompraVirtual;
 
 	public NotaFiscalVenda() {

@@ -1,36 +1,34 @@
-package com.kaique.lojaVirtual.doman.entity;
+package com.kaique.lojaVirtual.domain.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-
-import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_acesso")
-public class Acesso implements GrantedAuthority {
-	private static final long serialVersionUID = 1L;
-	
+@Table(name = "tb_marca_produto")
+public class MarcaProduto {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String descricao;
+	private String nomeDesc;
+	
+	@OneToMany(mappedBy = "marcaProduto")
+	private List<Produto> produtos = new ArrayList<>();
 
-	public Acesso() {
+	public MarcaProduto() {
 	}
 
-	public Acesso(Long id, String descricao) {
+	public MarcaProduto(Long id, String nomeDesc) {
 		this.id = id;
-		this.descricao = descricao;
-	}
-
-	@Override
-	public String getAuthority() {
-		return descricao;
+		this.nomeDesc = nomeDesc;
 	}
 
 	public Long getId() {
@@ -41,12 +39,12 @@ public class Acesso implements GrantedAuthority {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getNomeDesc() {
+		return nomeDesc;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNomeDesc(String nomeDesc) {
+		this.nomeDesc = nomeDesc;
 	}
 
 	@Override
@@ -62,7 +60,7 @@ public class Acesso implements GrantedAuthority {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Acesso other = (Acesso) obj;
+		MarcaProduto other = (MarcaProduto) obj;
 		return Objects.equals(id, other.id);
 	}
 }

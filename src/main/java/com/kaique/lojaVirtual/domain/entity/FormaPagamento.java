@@ -1,4 +1,4 @@
-package com.kaique.lojaVirtual.doman.entity;
+package com.kaique.lojaVirtual.domain.entity;
 
 import java.util.Objects;
 

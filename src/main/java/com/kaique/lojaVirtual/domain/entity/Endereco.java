@@ -1,8 +1,8 @@
-package com.kaique.lojaVirtual.doman.entity;
+package com.kaique.lojaVirtual.domain.entity;
 
 import java.util.Objects;
 
-import com.kaique.lojaVirtual.doman.enuns.TipoEndereco;
+import com.kaique.lojaVirtual.domain.enuns.TipoEndereco;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -21,37 +22,25 @@ public class Endereco {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@Column(nullable = false)
 	private String ruaLogra;
-
-	@Column(nullable = false)
 	private String cep;
-
-	@Column(nullable = false)
 	private String numero;
 	private String complemento;
-
-	@Column(nullable = false)
 	private String bairro;
-
-	@Column(nullable = false)
 	private String uf;
-
-	@Column(nullable = false)
 	private String cidade;
-
-	@Column(nullable = true)
 	private String estado;
 
-	@ManyToOne(targetEntity = Pessoa.class)
+	@ManyToOne
+	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TipoEndereco tipoEndereco;
 
-	@ManyToOne(targetEntity = Pessoa.class)
+	@ManyToOne
+	@JoinColumn(name = "empresa_id")
 	private Pessoa empresa;
 
 	public Endereco() {

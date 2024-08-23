@@ -1,4 +1,4 @@
-package com.kaique.lojaVirtual.doman.entity;
+package com.kaique.lojaVirtual.domain.entity;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -22,7 +22,7 @@ public class CupomDesconto {
 	private BigDecimal valorRealdesc;
 	private BigDecimal valorPorcentDesc;
 
-	@ManyToOne(targetEntity = PessoaJuridica.class)
+	@ManyToOne
 	@JoinColumn(name = "empresa_id")
 	private PessoaJuridica empresa;
 
