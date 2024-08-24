@@ -1,6 +1,7 @@
 package com.kaique.lojaVirtual.domain.entity;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -21,6 +22,8 @@ public class CupomDesconto {
 	private String codDesc;
 	private BigDecimal valorRealdesc;
 	private BigDecimal valorPorcentDesc;
+	private Date dataCriada;
+	private Date dataValidade;
 
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
@@ -30,11 +33,13 @@ public class CupomDesconto {
 	}
 
 	public CupomDesconto(Long id, String codDesc, BigDecimal valorRealdesc, BigDecimal valorPorcentDesc,
-			PessoaJuridica empresa) {
+			Date dataCriada, Date dataValidade, PessoaJuridica empresa) {
 		this.id = id;
 		this.codDesc = codDesc;
 		this.valorRealdesc = valorRealdesc;
 		this.valorPorcentDesc = valorPorcentDesc;
+		this.dataCriada = dataCriada;
+		this.dataValidade = dataValidade;
 		this.empresa = empresa;
 	}
 
@@ -68,6 +73,22 @@ public class CupomDesconto {
 
 	public void setValorPorcentDesc(BigDecimal valorPorcentDesc) {
 		this.valorPorcentDesc = valorPorcentDesc;
+	}
+
+	public Date getDataCriada() {
+		return dataCriada;
+	}
+
+	public void setDataCriada(Date dataCriada) {
+		this.dataCriada = dataCriada;
+	}
+
+	public Date getDataValidade() {
+		return dataValidade;
+	}
+
+	public void setDataValidade(Date dataValidade) {
+		this.dataValidade = dataValidade;
 	}
 
 	public PessoaJuridica getEmpresa() {
