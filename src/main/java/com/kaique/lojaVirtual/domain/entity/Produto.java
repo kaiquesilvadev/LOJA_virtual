@@ -24,7 +24,6 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	private String tipoUnidade;
 	private String nome;
 
@@ -34,6 +33,7 @@ public class Produto {
 	@ManyToOne
 	@JoinColumn(name = "nota_item_produto")
 	private NotaItemProduto notaItemProduto;
+	private Boolean ativo;
 	private Double peso;
 	private Double largura;
 	private Double autura;
@@ -41,7 +41,6 @@ public class Produto {
 	private BigDecimal valorVenda;
 	private Integer qtdEstoque;
 	private Integer qtdeAletaEstoque;
-	private String linkTouTuber;
 	private Boolean alertaQtdEstoque;
 	private Integer qtdCliente;
 
@@ -63,14 +62,15 @@ public class Produto {
 	}
 
 	public Produto(Long id, String tipoUnidade, String nome, String descricao, NotaItemProduto notaItemProduto,
-			Double peso, Double largura, Double autura, Double profundidade, BigDecimal valorVenda, Integer qtdEstoque,
-			Integer qtdeAletaEstoque, String linkTouTuber, Boolean alertaQtdEstoque, Integer qtdCliente,
-			MarcaProduto marcaProduto, CategoriaProduto categoriaProduto) {
+			Boolean ativo, Double peso, Double largura, Double autura, Double profundidade, BigDecimal valorVenda,
+			Integer qtdEstoque, Integer qtdeAletaEstoque, Boolean alertaQtdEstoque,
+			Integer qtdCliente, MarcaProduto marcaProduto, CategoriaProduto categoriaProduto) {
 		this.id = id;
 		this.tipoUnidade = tipoUnidade;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.notaItemProduto = notaItemProduto;
+		this.ativo = ativo;
 		this.peso = peso;
 		this.largura = largura;
 		this.autura = autura;
@@ -78,7 +78,6 @@ public class Produto {
 		this.valorVenda = valorVenda;
 		this.qtdEstoque = qtdEstoque;
 		this.qtdeAletaEstoque = qtdeAletaEstoque;
-		this.linkTouTuber = linkTouTuber;
 		this.alertaQtdEstoque = alertaQtdEstoque;
 		this.qtdCliente = qtdCliente;
 		this.marcaProduto = marcaProduto;
@@ -123,6 +122,14 @@ public class Produto {
 
 	public void setNotaItemProduto(NotaItemProduto notaItemProduto) {
 		this.notaItemProduto = notaItemProduto;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	public Double getPeso() {
@@ -179,14 +186,6 @@ public class Produto {
 
 	public void setQtdeAletaEstoque(Integer qtdeAletaEstoque) {
 		this.qtdeAletaEstoque = qtdeAletaEstoque;
-	}
-
-	public String getLinkTouTuber() {
-		return linkTouTuber;
-	}
-
-	public void setLinkTouTuber(String linkTouTuber) {
-		this.linkTouTuber = linkTouTuber;
 	}
 
 	public Boolean getAlertaQtdEstoque() {

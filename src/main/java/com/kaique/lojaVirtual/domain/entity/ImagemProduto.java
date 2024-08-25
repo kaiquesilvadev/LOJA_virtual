@@ -24,6 +24,7 @@ public class ImagemProduto {
 
 	@Column(columnDefinition = "TEXT")
 	private String imagemMiniatura;
+	private String linkTouTuber;
 
 	@JoinColumn(name = "produto_id")
 	@ManyToOne
@@ -32,10 +33,12 @@ public class ImagemProduto {
 	public ImagemProduto() {
 	}
 
-	public ImagemProduto(Long id, String imagemOriginal, String imagemMiniatura) {
+	public ImagemProduto(Long id, String imagemOriginal, String imagemMiniatura, String linkTouTuber, Produto produto) {
 		this.id = id;
 		this.imagemOriginal = imagemOriginal;
 		this.imagemMiniatura = imagemMiniatura;
+		this.linkTouTuber = linkTouTuber;
+		this.produto = produto;
 	}
 
 	public Long getId() {
@@ -60,6 +63,14 @@ public class ImagemProduto {
 
 	public void setImagemMiniatura(String imagemMiniatura) {
 		this.imagemMiniatura = imagemMiniatura;
+	}
+
+	public String getLinkTouTuber() {
+		return linkTouTuber;
+	}
+
+	public void setLinkTouTuber(String linkTouTuber) {
+		this.linkTouTuber = linkTouTuber;
 	}
 
 	public Produto getProduto() {
