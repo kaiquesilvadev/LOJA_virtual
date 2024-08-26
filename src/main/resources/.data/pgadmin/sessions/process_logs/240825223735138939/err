@@ -1,0 +1,744 @@
+240825223735377402,pg_dumpall: executing SELECT pg_catalog.set_config('search_path', '', false);
+
+240825223735379359,pg_dumpall: executing SELECT oid, rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb, rolcanlogin, rolconnlimit, rolpassword, rolvaliduntil, rolreplication, rolbypassrls, pg_catalog.shobj_description(oid, 'pg_authid') as rolcomment, rolname = current_user AS is_current_user FROM pg_authid WHERE rolname !~ '^pg_' ORDER BY 2
+
+240825223735383555,pg_dumpall: executing SELECT provider, label FROM pg_catalog.pg_shseclabel WHERE classoid = 'pg_catalog.pg_authid'::pg_catalog.regclass AND objoid = '10'
+
+240825223735385668,pg_dumpall: executing SELECT setconfig[1] FROM pg_db_role_setting WHERE setdatabase = 0 AND setrole = (SELECT oid FROM pg_authid WHERE rolname = 'postgres')
+
+240825223735386474,pg_dumpall: executing SELECT ur.rolname AS roleid, um.rolname AS member, a.admin_option, ug.rolname AS grantor FROM pg_auth_members a LEFT JOIN pg_authid ur on ur.oid = a.roleid LEFT JOIN pg_authid um on um.oid = a.member LEFT JOIN pg_authid ug on ug.oid = a.grantor WHERE NOT (ur.rolname ~ '^pg_' AND um.rolname ~ '^pg_')ORDER BY 1,2,3
+
+240825223735388314,pg_dumpall: executing SELECT oid, spcname, pg_catalog.pg_get_userbyid(spcowner) AS spcowner, pg_catalog.pg_tablespace_location(oid), (SELECT array_agg(acl ORDER BY row_n) FROM   (SELECT acl, row_n FROM      unnest(coalesce(spcacl,acldefault('t',spcowner)))      WITH ORDINALITY AS perm(acl,row_n)    WHERE NOT EXISTS (      SELECT 1      FROM unnest(acldefault('t',spcowner))        AS init(init_acl)      WHERE acl = init_acl)) AS spcacls)  AS spcacl, (SELECT array_agg(acl ORDER BY row_n) FROM   (SELECT acl, row_n FROM      unnest(acldefault('t',spcowner))      WITH ORDINALITY AS initp(acl,row_n)    WHERE NOT EXISTS (      SELECT 1      FROM unnest(coalesce(spcacl,acldefault('t',spcowner)))        AS permp(orig_acl)      WHERE acl = orig_acl)) AS rspcacls)  AS rspcacl, array_to_string(spcoptions, ', '),pg_catalog.shobj_description(oid, 'pg_tablespace') FROM pg_catalog.pg_tablespace WHERE spcname !~ '^pg_' ORDER BY 1
+
+240825223735394210,pg_dumpall: executing SELECT datname FROM pg_database d WHERE datallowconn AND datconnlimit != -2 ORDER BY (datname <> 'template1'), datname
+
+240825223735395306,pg_dumpall: dumping database "template1"
+
+240825223735395894,pg_dumpall: running ""/usr/local/pgsql-14/pg_dump"  -f /var/lib/pgadmin/storage/me_example.com/teste -w -v  -Fa 'host='"'"'pg-docker'"'"' port=5432 user=postgres dbname=template1'"
+
+240825223735465090,pg_dump: last built-in OID is 16383
+
+240825223735465622,pg_dump: reading extensions
+
+240825223735479778,pg_dump: identifying extension members
+
+240825223735486283,pg_dump: reading schemas
+
+240825223735502813,pg_dump: reading user-defined tables
+
+240825223735577590,pg_dump: reading user-defined functions
+
+240825223735641115,pg_dump: reading user-defined types
+
+240825223735659414,pg_dump: reading procedural languages
+
+240825223735663950,pg_dump: reading user-defined aggregate functions
+
+240825223735665090,pg_dump: reading user-defined operators
+
+240825223735668366,pg_dump: reading user-defined access methods
+
+240825223735669438,pg_dump: reading user-defined operator classes
+
+240825223735670198,pg_dump: reading user-defined operator families
+
+240825223735672532,pg_dump: reading user-defined text search parsers
+
+240825223735674394,pg_dump: reading user-defined text search templates
+
+240825223735676213,pg_dump: reading user-defined text search dictionaries
+
+240825223735678427,pg_dump: reading user-defined text search configurations
+
+240825223735680328,pg_dump: reading user-defined foreign-data wrappers
+
+240825223735683283,pg_dump: reading user-defined foreign servers
+
+240825223735685502,pg_dump: reading default privileges
+
+240825223735687624,pg_dump: reading user-defined collations
+
+240825223735702136,pg_dump: reading user-defined conversions
+
+240825223735705020,pg_dump: reading type casts
+
+240825223735706999,pg_dump: reading transforms
+
+240825223735707398,pg_dump: reading table inheritance information
+
+240825223735709025,pg_dump: reading event triggers
+
+240825223735711074,pg_dump: finding extension tables
+
+240825223735714994,pg_dump: finding inheritance relationships
+
+240825223735715346,pg_dump: reading column info for interesting tables
+
+240825223735715719,pg_dump: flagging inherited columns in subtables
+
+240825223735716064,pg_dump: reading partitioning data
+
+240825223735716606,pg_dump: reading indexes
+
+240825223735716938,pg_dump: flagging indexes in partitioned tables
+
+240825223735717291,pg_dump: reading extended statistics
+
+240825223735718528,pg_dump: reading constraints
+
+240825223735718904,pg_dump: reading triggers
+
+240825223735719236,pg_dump: reading rewrite rules
+
+240825223735721081,pg_dump: reading policies
+
+240825223735721417,pg_dump: reading row-level security policies
+
+240825223735723892,pg_dump: reading publications
+
+240825223735725771,pg_dump: reading publication membership
+
+240825223735727534,pg_dump: reading subscriptions
+
+240825223735732205,pg_dump: reading large objects
+
+240825223735733980,pg_dump: reading dependency data
+
+240825223735741325,pg_dump: saving encoding = UTF8
+
+240825223735741792,pg_dump: saving standard_conforming_strings = on
+
+240825223735742191,pg_dump: saving search_path = 
+
+240825223735742567,pg_dump: implied data-only restore
+
+240825223735745349,pg_dumpall: dumping database "mydatabase"
+
+240825223735745939,pg_dumpall: running ""/usr/local/pgsql-14/pg_dump"  -f /var/lib/pgadmin/storage/me_example.com/teste -w -v --create -Fa 'host='"'"'pg-docker'"'"' port=5432 user=postgres dbname=mydatabase'"
+
+240825223735775550,pg_dump: last built-in OID is 16383
+
+240825223735775966,pg_dump: reading extensions
+
+240825223735778220,pg_dump: identifying extension members
+
+240825223735780642,pg_dump: reading schemas
+
+240825223735786777,pg_dump: reading user-defined tables
+
+240825223735854471,pg_dump: reading user-defined functions
+
+240825223735864847,pg_dump: reading user-defined types
+
+240825223735886745,pg_dump: reading procedural languages
+
+240825223735888965,pg_dump: reading user-defined aggregate functions
+
+240825223735889998,pg_dump: reading user-defined operators
+
+240825223735892689,pg_dump: reading user-defined access methods
+
+240825223735893325,pg_dump: reading user-defined operator classes
+
+240825223735894885,pg_dump: reading user-defined operator families
+
+240825223735897651,pg_dump: reading user-defined text search parsers
+
+240825223735900054,pg_dump: reading user-defined text search templates
+
+240825223735901904,pg_dump: reading user-defined text search dictionaries
+
+240825223735904063,pg_dump: reading user-defined text search configurations
+
+240825223735906145,pg_dump: reading user-defined foreign-data wrappers
+
+240825223735908619,pg_dump: reading user-defined foreign servers
+
+240825223735911024,pg_dump: reading default privileges
+
+240825223735913374,pg_dump: reading user-defined collations
+
+240825223735915761,pg_dump: reading user-defined conversions
+
+240825223735918535,pg_dump: reading type casts
+
+240825223735920822,pg_dump: reading transforms
+
+240825223735921210,pg_dump: reading table inheritance information
+
+240825223735921997,pg_dump: reading event triggers
+
+240825223735923926,pg_dump: finding extension tables
+
+240825223735925722,pg_dump: finding inheritance relationships
+
+240825223735926127,pg_dump: reading column info for interesting tables
+
+240825223735926665,pg_dump: finding the columns and types of table "public.tb_acesso"
+
+240825223735927145,pg_dump: finding the columns and types of table "public.tb_categoria_produto"
+
+240825223735927549,pg_dump: finding the columns and types of table "public.tb_imagem_produto"
+
+240825223735928008,pg_dump: finding the columns and types of table "public.tb_marca_produto"
+
+240825223735928479,pg_dump: finding the columns and types of table "public.tb_pessoa_fisica"
+
+240825223735929133,pg_dump: finding the columns and types of table "public.tb_pessoa_juridica"
+
+240825223735929700,pg_dump: finding the columns and types of table "public.tb_produto"
+
+240825223735930399,pg_dump: finding the columns and types of table "public.tb_usuario"
+
+240825223735930954,pg_dump: finding the columns and types of table "public.tb_usuario_acessos"
+
+240825223735931369,pg_dump: finding the columns and types of table "public.tb_nota_fiscal_compra"
+
+240825223735932114,pg_dump: finding the columns and types of table "public.tb_endereco"
+
+240825223735932626,pg_dump: finding check constraints for table "public.tb_endereco"
+
+240825223735933769,pg_dump: finding the columns and types of table "public.tb_avaliacao_produto"
+
+240825223735934259,pg_dump: finding the columns and types of table "public.tb_conta_pagar"
+
+240825223735934755,pg_dump: finding check constraints for table "public.tb_conta_pagar"
+
+240825223735935152,pg_dump: finding the columns and types of table "public.tb_conta_receber"
+
+240825223735935501,pg_dump: finding check constraints for table "public.tb_conta_receber"
+
+240825223735935885,pg_dump: finding the columns and types of table "public.tb_cupom_desconto"
+
+240825223735936285,pg_dump: finding the columns and types of table "public.tb_forma_pagam"
+
+240825223735936671,pg_dump: finding the columns and types of table "public.tb_item_venda_loja"
+
+240825223735937103,pg_dump: finding the columns and types of table "public.tb_nota_fiscal_venda"
+
+240825223735937608,pg_dump: finding the columns and types of table "public.tb_venda_compra_virtual"
+
+240825223735938165,pg_dump: finding check constraints for table "public.tb_venda_compra_virtual"
+
+240825223735938545,pg_dump: flagging inherited columns in subtables
+
+240825223735938905,pg_dump: reading partitioning data
+
+240825223735939854,pg_dump: reading indexes
+
+240825223735940247,pg_dump: reading indexes for table "public.tb_acesso"
+
+240825223735942501,pg_dump: reading indexes for table "public.tb_categoria_produto"
+
+240825223735943585,pg_dump: reading indexes for table "public.tb_imagem_produto"
+
+240825223735944676,pg_dump: reading indexes for table "public.tb_marca_produto"
+
+240825223735945651,pg_dump: reading indexes for table "public.tb_pessoa_fisica"
+
+240825223735946628,pg_dump: reading indexes for table "public.tb_pessoa_juridica"
+
+240825223735947582,pg_dump: reading indexes for table "public.tb_produto"
+
+240825223735948634,pg_dump: reading indexes for table "public.tb_usuario"
+
+240825223735949573,pg_dump: reading indexes for table "public.tb_usuario_acessos"
+
+240825223735950501,pg_dump: reading indexes for table "public.tb_nota_fiscal_compra"
+
+240825223735951517,pg_dump: reading indexes for table "public.tb_endereco"
+
+240825223735952456,pg_dump: reading indexes for table "public.tb_avaliacao_produto"
+
+240825223735953555,pg_dump: reading indexes for table "public.tb_conta_pagar"
+
+240825223735954558,pg_dump: reading indexes for table "public.tb_conta_receber"
+
+240825223735955479,pg_dump: reading indexes for table "public.tb_cupom_desconto"
+
+240825223735956441,pg_dump: reading indexes for table "public.tb_forma_pagam"
+
+240825223735957396,pg_dump: reading indexes for table "public.tb_item_venda_loja"
+
+240825223735958379,pg_dump: reading indexes for table "public.tb_nota_fiscal_venda"
+
+240825223735959383,pg_dump: reading indexes for table "public.tb_venda_compra_virtual"
+
+240825223735960350,pg_dump: flagging indexes in partitioned tables
+
+240825223735960837,pg_dump: reading extended statistics
+
+240825223735962628,pg_dump: reading constraints
+
+240825223735963047,pg_dump: reading foreign key constraints for table "public.tb_acesso"
+
+240825223735963458,pg_dump: reading foreign key constraints for table "public.tb_categoria_produto"
+
+240825223735963844,pg_dump: reading foreign key constraints for table "public.tb_imagem_produto"
+
+240825223735964216,pg_dump: reading foreign key constraints for table "public.tb_marca_produto"
+
+240825223735964579,pg_dump: reading foreign key constraints for table "public.tb_pessoa_fisica"
+
+240825223735964984,pg_dump: reading foreign key constraints for table "public.tb_pessoa_juridica"
+
+240825223735965376,pg_dump: reading foreign key constraints for table "public.tb_produto"
+
+240825223735965784,pg_dump: reading foreign key constraints for table "public.tb_usuario"
+
+240825223735966160,pg_dump: reading foreign key constraints for table "public.tb_usuario_acessos"
+
+240825223735966561,pg_dump: reading foreign key constraints for table "public.tb_nota_fiscal_compra"
+
+240825223735966968,pg_dump: reading foreign key constraints for table "public.tb_endereco"
+
+240825223735967359,pg_dump: reading foreign key constraints for table "public.tb_avaliacao_produto"
+
+240825223735967722,pg_dump: reading foreign key constraints for table "public.tb_conta_pagar"
+
+240825223735968098,pg_dump: reading foreign key constraints for table "public.tb_cupom_desconto"
+
+240825223735968501,pg_dump: reading foreign key constraints for table "public.tb_forma_pagam"
+
+240825223735968883,pg_dump: reading foreign key constraints for table "public.tb_item_venda_loja"
+
+240825223735969263,pg_dump: reading foreign key constraints for table "public.tb_nota_fiscal_venda"
+
+240825223735969613,pg_dump: reading foreign key constraints for table "public.tb_venda_compra_virtual"
+
+240825223735969981,pg_dump: reading triggers
+
+240825223735970364,pg_dump: reading triggers for table "public.tb_acesso"
+
+240825223735970768,pg_dump: reading triggers for table "public.tb_categoria_produto"
+
+240825223735971119,pg_dump: reading triggers for table "public.tb_imagem_produto"
+
+240825223735971500,pg_dump: reading triggers for table "public.tb_marca_produto"
+
+240825223735971905,pg_dump: reading triggers for table "public.tb_pessoa_fisica"
+
+240825223735972267,pg_dump: reading triggers for table "public.tb_pessoa_juridica"
+
+240825223735972643,pg_dump: reading triggers for table "public.tb_produto"
+
+240825223735973038,pg_dump: reading triggers for table "public.tb_usuario"
+
+240825223735973444,pg_dump: reading triggers for table "public.tb_usuario_acessos"
+
+240825223735973813,pg_dump: reading triggers for table "public.tb_nota_fiscal_compra"
+
+240825223735974210,pg_dump: reading triggers for table "public.tb_endereco"
+
+240825223735974559,pg_dump: reading triggers for table "public.tb_avaliacao_produto"
+
+240825223735974913,pg_dump: reading triggers for table "public.tb_conta_pagar"
+
+240825223735975285,pg_dump: reading triggers for table "public.tb_cupom_desconto"
+
+240825223735975660,pg_dump: reading triggers for table "public.tb_forma_pagam"
+
+240825223735976053,pg_dump: reading triggers for table "public.tb_item_venda_loja"
+
+240825223735976672,pg_dump: reading triggers for table "public.tb_nota_fiscal_venda"
+
+240825223735977113,pg_dump: reading triggers for table "public.tb_venda_compra_virtual"
+
+240825223735977564,pg_dump: reading rewrite rules
+
+240825223735977977,pg_dump: reading policies
+
+240825223735978347,pg_dump: reading row-level security policies
+
+240825223735978727,pg_dump: reading publications
+
+240825223735979129,pg_dump: reading publication membership
+
+240825223735980205,pg_dump: reading subscriptions
+
+240825223735984032,pg_dump: reading large objects
+
+240825223735985773,pg_dump: reading dependency data
+
+240825223735994122,pg_dump: saving encoding = UTF8
+
+240825223735994595,pg_dump: saving standard_conforming_strings = on
+
+240825223735995017,pg_dump: saving search_path = 
+
+240825223735995418,pg_dump: saving database definition
+
+240825223736025638,pg_dump: creating DATABASE "mydatabase"
+
+240825223736026137,pg_dump: connecting to new database "mydatabase"
+
+240825223736026589,pg_dump: creating SEQUENCE "public.seq_pessoa"
+
+240825223736027043,pg_dump: creating TABLE "public.tb_acesso"
+
+240825223736027464,pg_dump: creating SEQUENCE "public.tb_acesso_id_seq"
+
+240825223736027862,pg_dump: creating TABLE "public.tb_avaliacao_produto"
+
+240825223736028248,pg_dump: creating SEQUENCE "public.tb_avaliacao_produto_id_seq"
+
+240825223736028639,pg_dump: creating TABLE "public.tb_categoria_produto"
+
+240825223736029073,pg_dump: creating SEQUENCE "public.tb_categoria_produto_id_seq"
+
+240825223736029462,pg_dump: creating TABLE "public.tb_conta_pagar"
+
+240825223736029875,pg_dump: creating SEQUENCE "public.tb_conta_pagar_id_seq"
+
+240825223736030265,pg_dump: creating TABLE "public.tb_conta_receber"
+
+240825223736030665,pg_dump: creating SEQUENCE "public.tb_conta_receber_id_seq"
+
+240825223736031066,pg_dump: creating TABLE "public.tb_cupom_desconto"
+
+240825223736031508,pg_dump: creating SEQUENCE "public.tb_cupom_desconto_id_seq"
+
+240825223736031903,pg_dump: creating TABLE "public.tb_endereco"
+
+240825223736032304,pg_dump: creating SEQUENCE "public.tb_endereco_id_seq"
+
+240825223736032697,pg_dump: creating TABLE "public.tb_forma_pagam"
+
+240825223736033112,pg_dump: creating SEQUENCE "public.tb_forma_pagam_id_seq"
+
+240825223736033486,pg_dump: creating TABLE "public.tb_imagem_produto"
+
+240825223736033872,pg_dump: creating SEQUENCE "public.tb_imagem_produto_id_seq"
+
+240825223736034256,pg_dump: creating TABLE "public.tb_item_venda_loja"
+
+240825223736034666,pg_dump: creating SEQUENCE "public.tb_item_venda_loja_id_seq"
+
+240825223736035059,pg_dump: creating TABLE "public.tb_marca_produto"
+
+240825223736035436,pg_dump: creating SEQUENCE "public.tb_marca_produto_id_seq"
+
+240825223736035866,pg_dump: creating TABLE "public.tb_nota_fiscal_compra"
+
+240825223736036268,pg_dump: creating SEQUENCE "public.tb_nota_fiscal_compra_id_seq"
+
+240825223736036673,pg_dump: creating TABLE "public.tb_nota_fiscal_venda"
+
+240825223736037098,pg_dump: creating SEQUENCE "public.tb_nota_fiscal_venda_id_seq"
+
+240825223736037474,pg_dump: creating TABLE "public.tb_pessoa_fisica"
+
+240825223736037862,pg_dump: creating TABLE "public.tb_pessoa_juridica"
+
+240825223736038258,pg_dump: creating TABLE "public.tb_produto"
+
+240825223736038640,pg_dump: creating SEQUENCE "public.tb_produto_id_seq"
+
+240825223736039015,pg_dump: creating TABLE "public.tb_usuario"
+
+240825223736039400,pg_dump: creating TABLE "public.tb_usuario_acessos"
+
+240825223736039822,pg_dump: creating SEQUENCE "public.tb_usuario_id_seq"
+
+240825223736040245,pg_dump: creating TABLE "public.tb_venda_compra_virtual"
+
+240825223736040683,pg_dump: creating SEQUENCE "public.tb_venda_compra_virtual_id_seq"
+
+240825223736041124,pg_dump: processing data for table "public.tb_acesso"
+
+240825223736041685,pg_dump: dumping contents of table "public.tb_acesso"
+
+240825223736042120,pg_dump: processing data for table "public.tb_avaliacao_produto"
+
+240825223736042581,pg_dump: dumping contents of table "public.tb_avaliacao_produto"
+
+240825223736043121,pg_dump: processing data for table "public.tb_categoria_produto"
+
+240825223736043696,pg_dump: dumping contents of table "public.tb_categoria_produto"
+
+240825223736044156,pg_dump: processing data for table "public.tb_conta_pagar"
+
+240825223736044702,pg_dump: dumping contents of table "public.tb_conta_pagar"
+
+240825223736045148,pg_dump: processing data for table "public.tb_conta_receber"
+
+240825223736045598,pg_dump: dumping contents of table "public.tb_conta_receber"
+
+240825223736046068,pg_dump: processing data for table "public.tb_cupom_desconto"
+
+240825223736046577,pg_dump: dumping contents of table "public.tb_cupom_desconto"
+
+240825223736047057,pg_dump: processing data for table "public.tb_endereco"
+
+240825223736047619,pg_dump: dumping contents of table "public.tb_endereco"
+
+240825223736048170,pg_dump: processing data for table "public.tb_forma_pagam"
+
+240825223736048705,pg_dump: dumping contents of table "public.tb_forma_pagam"
+
+240825223736049201,pg_dump: processing data for table "public.tb_imagem_produto"
+
+240825223736049698,pg_dump: dumping contents of table "public.tb_imagem_produto"
+
+240825223736050191,pg_dump: processing data for table "public.tb_item_venda_loja"
+
+240825223736050712,pg_dump: dumping contents of table "public.tb_item_venda_loja"
+
+240825223736051209,pg_dump: processing data for table "public.tb_marca_produto"
+
+240825223736051713,pg_dump: dumping contents of table "public.tb_marca_produto"
+
+240825223736052128,pg_dump: processing data for table "public.tb_nota_fiscal_compra"
+
+240825223736052555,pg_dump: dumping contents of table "public.tb_nota_fiscal_compra"
+
+240825223736053016,pg_dump: processing data for table "public.tb_nota_fiscal_venda"
+
+240825223736053477,pg_dump: dumping contents of table "public.tb_nota_fiscal_venda"
+
+240825223736053959,pg_dump: processing data for table "public.tb_pessoa_fisica"
+
+240825223736054424,pg_dump: dumping contents of table "public.tb_pessoa_fisica"
+
+240825223736054901,pg_dump: processing data for table "public.tb_pessoa_juridica"
+
+240825223736055342,pg_dump: dumping contents of table "public.tb_pessoa_juridica"
+
+240825223736055758,pg_dump: processing data for table "public.tb_produto"
+
+240825223736056157,pg_dump: dumping contents of table "public.tb_produto"
+
+240825223736056554,pg_dump: processing data for table "public.tb_usuario"
+
+240825223736057010,pg_dump: dumping contents of table "public.tb_usuario"
+
+240825223736057435,pg_dump: processing data for table "public.tb_usuario_acessos"
+
+240825223736057816,pg_dump: dumping contents of table "public.tb_usuario_acessos"
+
+240825223736058220,pg_dump: processing data for table "public.tb_venda_compra_virtual"
+
+240825223736058671,pg_dump: dumping contents of table "public.tb_venda_compra_virtual"
+
+240825223736059101,pg_dump: executing SEQUENCE SET seq_pessoa
+
+240825223736059787,pg_dump: executing SEQUENCE SET tb_acesso_id_seq
+
+240825223736060251,pg_dump: executing SEQUENCE SET tb_avaliacao_produto_id_seq
+
+240825223736060680,pg_dump: executing SEQUENCE SET tb_categoria_produto_id_seq
+
+240825223736061162,pg_dump: executing SEQUENCE SET tb_conta_pagar_id_seq
+
+240825223736061662,pg_dump: executing SEQUENCE SET tb_conta_receber_id_seq
+
+240825223736062360,pg_dump: executing SEQUENCE SET tb_cupom_desconto_id_seq
+
+240825223736062814,pg_dump: executing SEQUENCE SET tb_endereco_id_seq
+
+240825223736063347,pg_dump: executing SEQUENCE SET tb_forma_pagam_id_seq
+
+240825223736063843,pg_dump: executing SEQUENCE SET tb_imagem_produto_id_seq
+
+240825223736064445,pg_dump: executing SEQUENCE SET tb_item_venda_loja_id_seq
+
+240825223736065041,pg_dump: executing SEQUENCE SET tb_marca_produto_id_seq
+
+240825223736065421,pg_dump: executing SEQUENCE SET tb_nota_fiscal_compra_id_seq
+
+240825223736065878,pg_dump: executing SEQUENCE SET tb_nota_fiscal_venda_id_seq
+
+240825223736066370,pg_dump: executing SEQUENCE SET tb_produto_id_seq
+
+240825223736066795,pg_dump: executing SEQUENCE SET tb_usuario_id_seq
+
+240825223736067258,pg_dump: executing SEQUENCE SET tb_venda_compra_virtual_id_seq
+
+240825223736067708,pg_dump: creating CONSTRAINT "public.tb_acesso tb_acesso_pkey"
+
+240825223736068171,pg_dump: creating CONSTRAINT "public.tb_avaliacao_produto tb_avaliacao_produto_pkey"
+
+240825223736068624,pg_dump: creating CONSTRAINT "public.tb_categoria_produto tb_categoria_produto_pkey"
+
+240825223736069095,pg_dump: creating CONSTRAINT "public.tb_conta_pagar tb_conta_pagar_pkey"
+
+240825223736069603,pg_dump: creating CONSTRAINT "public.tb_conta_receber tb_conta_receber_pkey"
+
+240825223736070098,pg_dump: creating CONSTRAINT "public.tb_cupom_desconto tb_cupom_desconto_pkey"
+
+240825223736070579,pg_dump: creating CONSTRAINT "public.tb_endereco tb_endereco_pkey"
+
+240825223736071113,pg_dump: creating CONSTRAINT "public.tb_forma_pagam tb_forma_pagam_pkey"
+
+240825223736071598,pg_dump: creating CONSTRAINT "public.tb_imagem_produto tb_imagem_produto_pkey"
+
+240825223736072080,pg_dump: creating CONSTRAINT "public.tb_item_venda_loja tb_item_venda_loja_pkey"
+
+240825223736072544,pg_dump: creating CONSTRAINT "public.tb_marca_produto tb_marca_produto_pkey"
+
+240825223736073031,pg_dump: creating CONSTRAINT "public.tb_nota_fiscal_compra tb_nota_fiscal_compra_pkey"
+
+240825223736073463,pg_dump: creating CONSTRAINT "public.tb_nota_fiscal_venda tb_nota_fiscal_venda_pkey"
+
+240825223736073814,pg_dump: creating CONSTRAINT "public.tb_pessoa_fisica tb_pessoa_fisica_pkey"
+
+240825223736074161,pg_dump: creating CONSTRAINT "public.tb_pessoa_juridica tb_pessoa_juridica_pkey"
+
+240825223736074544,pg_dump: creating CONSTRAINT "public.tb_produto tb_produto_pkey"
+
+240825223736074938,pg_dump: creating CONSTRAINT "public.tb_usuario tb_usuario_pkey"
+
+240825223736075325,pg_dump: creating CONSTRAINT "public.tb_venda_compra_virtual tb_venda_compra_virtual_pkey"
+
+240825223736075718,pg_dump: creating CONSTRAINT "public.tb_conta_pagar uk11nlblv8ewns0c7t8n8huk841"
+
+240825223736076089,pg_dump: creating CONSTRAINT "public.tb_nota_fiscal_venda ukf0s5k3jqeauay2vcba98x9ahs"
+
+240825223736076704,pg_dump: creating CONSTRAINT "public.tb_usuario_acessos ukon8ks0hoqmllgy9yhgajrpisq"
+
+240825223736077076,pg_dump: creating FK CONSTRAINT "public.tb_imagem_produto fk2tknjwh9hx3phphf8qi80o6f7"
+
+240825223736077472,pg_dump: creating FK CONSTRAINT "public.tb_avaliacao_produto fk4o128tr2yli066cags0w2ycm9"
+
+240825223736077897,pg_dump: creating FK CONSTRAINT "public.tb_venda_compra_virtual fk5o2u99xp53oxksrksrnnli1fp"
+
+240825223736078269,pg_dump: creating FK CONSTRAINT "public.tb_forma_pagam fk8gngfo7rcwg0jhkcaavdwdngy"
+
+240825223736078689,pg_dump: creating FK CONSTRAINT "public.tb_venda_compra_virtual fk9pxarkg7mafw2k84yxssxxh1o"
+
+240825223736079042,pg_dump: creating FK CONSTRAINT "public.tb_usuario_acessos fk9v2u2m0rt6glnqw9wcn9ksu43"
+
+240825223736079387,pg_dump: creating FK CONSTRAINT "public.tb_produto fk9yv57uxn7rjlm1ryxp24si2fp"
+
+240825223736079745,pg_dump: creating FK CONSTRAINT "public.tb_nota_fiscal_compra fkaevrjqqog4t1kwx56xc1w2nk7"
+
+240825223736080100,pg_dump: creating FK CONSTRAINT "public.tb_venda_compra_virtual fkb3h7mf9uuff0q9unlxf3r9a29"
+
+240825223736080547,pg_dump: creating FK CONSTRAINT "public.tb_venda_compra_virtual fkb9h9tey2hjqe7y8sgwya1lwli"
+
+240825223736080956,pg_dump: creating FK CONSTRAINT "public.tb_cupom_desconto fke2bk3gaxy1n4pejwsny1svgic"
+
+240825223736081352,pg_dump: creating FK CONSTRAINT "public.tb_usuario_acessos fkegdmnngxji4co4hyd5qdwkqmp"
+
+240825223736081757,pg_dump: creating FK CONSTRAINT "public.tb_item_venda_loja fkgkgpj4im82rb3nucxn0qd882i"
+
+240825223736082108,pg_dump: creating FK CONSTRAINT "public.tb_venda_compra_virtual fkh68ov3kj4fso9hnc3jk4rr0uu"
+
+240825223736082439,pg_dump: creating FK CONSTRAINT "public.tb_conta_pagar fkj5l4sf17m22epm9emef0qxgp5"
+
+240825223736082774,pg_dump: creating FK CONSTRAINT "public.tb_nota_fiscal_compra fkly9jpsvp5l0pefsbtglhsu3go"
+
+240825223736083108,pg_dump: creating FK CONSTRAINT "public.tb_avaliacao_produto fkm7ta9mcfchinml7ujckig68fh"
+
+240825223736083491,pg_dump: creating FK CONSTRAINT "public.tb_produto fkn9kcsal197jx0x5rq7nfwqjki"
+
+240825223736083913,pg_dump: creating FK CONSTRAINT "public.tb_item_venda_loja fkqgmsv5fklcuvcjci7jr62fvpp"
+
+240825223736084386,pg_dump: creating FK CONSTRAINT "public.tb_nota_fiscal_venda fkqj3omi39yhb7i6ktcvjtwx8fq"
+
+240825223736084930,pg_dump: creating FK CONSTRAINT "public.tb_avaliacao_produto fkqsfdamaex2skiqv4hs1s9nstk"
+
+240825223736085355,pg_dump: creating FK CONSTRAINT "public.tb_produto fks8i0i53pk8sb3o9qjtf1d9iky"
+
+240825223736085952,pg_dump: creating FK CONSTRAINT "public.tb_conta_pagar fkscg418te6rb26ftj83vwsenrt"
+
+240825223736086352,pg_dumpall: dumping database "postgres"
+
+240825223736086770,pg_dumpall: running ""/usr/local/pgsql-14/pg_dump"  -f /var/lib/pgadmin/storage/me_example.com/teste -w -v  -Fa 'host='"'"'pg-docker'"'"' port=5432 user=postgres dbname=postgres'"
+
+240825223736115500,pg_dump: last built-in OID is 16383
+
+240825223736116030,pg_dump: reading extensions
+
+240825223736129043,pg_dump: identifying extension members
+
+240825223736136953,pg_dump: reading schemas
+
+240825223736151959,pg_dump: reading user-defined tables
+
+240825223736254482,pg_dump: reading user-defined functions
+
+240825223736319863,pg_dump: reading user-defined types
+
+240825223736340721,pg_dump: reading procedural languages
+
+240825223736345588,pg_dump: reading user-defined aggregate functions
+
+240825223736346670,pg_dump: reading user-defined operators
+
+240825223736350107,pg_dump: reading user-defined access methods
+
+240825223736352304,pg_dump: reading user-defined operator classes
+
+240825223736353211,pg_dump: reading user-defined operator families
+
+240825223736355618,pg_dump: reading user-defined text search parsers
+
+240825223736357564,pg_dump: reading user-defined text search templates
+
+240825223736359770,pg_dump: reading user-defined text search dictionaries
+
+240825223736362282,pg_dump: reading user-defined text search configurations
+
+240825223736364284,pg_dump: reading user-defined foreign-data wrappers
+
+240825223736367211,pg_dump: reading user-defined foreign servers
+
+240825223736369573,pg_dump: reading default privileges
+
+240825223736371849,pg_dump: reading user-defined collations
+
+240825223736388288,pg_dump: reading user-defined conversions
+
+240825223736391069,pg_dump: reading type casts
+
+240825223736393068,pg_dump: reading transforms
+
+240825223736393550,pg_dump: reading table inheritance information
+
+240825223736395096,pg_dump: reading event triggers
+
+240825223736397018,pg_dump: finding extension tables
+
+240825223736400702,pg_dump: finding inheritance relationships
+
+240825223736401092,pg_dump: reading column info for interesting tables
+
+240825223736401489,pg_dump: flagging inherited columns in subtables
+
+240825223736401911,pg_dump: reading partitioning data
+
+240825223736402308,pg_dump: reading indexes
+
+240825223736402678,pg_dump: flagging indexes in partitioned tables
+
+240825223736403063,pg_dump: reading extended statistics
+
+240825223736404156,pg_dump: reading constraints
+
+240825223736404570,pg_dump: reading triggers
+
+240825223736404969,pg_dump: reading rewrite rules
+
+240825223736406567,pg_dump: reading policies
+
+240825223736406904,pg_dump: reading row-level security policies
+
+240825223736409408,pg_dump: reading publications
+
+240825223736411405,pg_dump: reading publication membership
+
+240825223736413137,pg_dump: reading subscriptions
+
+240825223736417536,pg_dump: reading large objects
+
+240825223736419447,pg_dump: reading dependency data
+
+240825223736426165,pg_dump: saving encoding = UTF8
+
+240825223736426702,pg_dump: saving standard_conforming_strings = on
+
+240825223736427103,pg_dump: saving search_path = 
+
+240825223736427558,pg_dump: implied data-only restore
+
