@@ -20,12 +20,14 @@ import jakarta.persistence.SequenceGenerator;
  * uma tabela separada, com todas as colunas da classe base e suas próprias
  * colunas. A tabela da classe base não será criada.
  */
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pessoa {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pessoa")
-	@SequenceGenerator(name = "seq_pessoa", sequenceName = "seq_pessoa", initialValue = 1, allocationSize = 1)
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pessoa")
+	//@SequenceGenerator(name = "seq_pessoa", sequenceName = "seq_pessoa", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String email;
