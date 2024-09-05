@@ -44,9 +44,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.kaique.lojaVirtual.domain.config.security.CustomPasswordAuthenticationConverter;
-import com.kaique.lojaVirtual.domain.config.security.CustomPasswordAuthenticationProvider;
-import com.kaique.lojaVirtual.domain.config.security.CustomUserAuthorities;
+
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
