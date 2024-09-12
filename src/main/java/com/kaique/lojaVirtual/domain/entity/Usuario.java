@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,8 +19,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -37,8 +36,8 @@ public class Usuario implements UserDetails {
 	 * no banco de dados. O tipo `TemporalType.DATE` armazena apenas a data (ano,
 	 * mês e dia) e não inclui a hora, minuto ou segundo.
 	 */
-	@Temporal(TemporalType.DATE)
-	private Date data_atua_senha;
+	@UpdateTimestamp
+	private Date dataAtuaSenha;
 
 	@JoinColumn(name = "pessoa_id")
 	@ManyToOne
@@ -50,11 +49,11 @@ public class Usuario implements UserDetails {
 	public Usuario() {
 	}
 
-	public Usuario(Long id, String login, String senha, Date data_atua_senha, Pessoa pessoa) {
+	public Usuario(Long id, String login, String senha, Date dataAtuaSenha, Pessoa pessoa) {
 		this.id = id;
 		this.login = login;
 		this.senha = senha;
-		this.data_atua_senha = data_atua_senha;
+		this.dataAtuaSenha = dataAtuaSenha;
 		this.pessoa = pessoa;
 	}
 
@@ -97,12 +96,12 @@ public class Usuario implements UserDetails {
 		this.senha = senha;
 	}
 
-	public Date getData_atua_senha() {
-		return data_atua_senha;
+	public Date getDataAtuaSenha() {
+		return dataAtuaSenha;
 	}
 
-	public void setData_atua_senha(Date data_atua_senha) {
-		this.data_atua_senha = data_atua_senha;
+	public void setDataAtuaSenha(Date dataAtuaSenha) {
+		this.dataAtuaSenha = dataAtuaSenha;
 	}
 
 	public Pessoa getPessoa() {

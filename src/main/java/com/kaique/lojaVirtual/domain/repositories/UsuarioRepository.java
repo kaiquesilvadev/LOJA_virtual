@@ -12,4 +12,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	@Query("select u from Usuario u join fetch u.acessos where u.login = ?1")
 	Optional<Usuario> buscaUserPorLogin(String login);
 
+	Boolean existsByLogin(String emial);
 }
