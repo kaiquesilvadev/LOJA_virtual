@@ -34,7 +34,7 @@ public abstract class Pessoa {
 	private String email;
 	private String telefone;
 
-	@OneToMany(mappedBy = "pessoa")
+	@OneToMany(mappedBy = "pessoa" , cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
 	private List<Usuario> usuarios = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "pessoa" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
