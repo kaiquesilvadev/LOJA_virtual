@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
 
 @Entity
 /**
@@ -35,6 +36,9 @@ public abstract class Pessoa {
 
 	@OneToMany(mappedBy = "pessoa")
 	private List<Usuario> usuarios = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "pessoa" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	private List<Endereco> enderecos = new ArrayList<>();
 
 	public Pessoa() {
 	}
@@ -80,6 +84,10 @@ public abstract class Pessoa {
 
 	public List<Usuario> getUsuarios() {
 		return usuarios;
+	}
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
 	}
 
 	@Override

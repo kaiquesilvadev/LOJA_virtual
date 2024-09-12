@@ -4,7 +4,9 @@ public enum TipoEndereco {
 	
 	
 	COBRANCA("Cobrança"),
-	ENTREGA("Entrega");
+	ENTREGA("Entrega"),
+	PARTICULA("Particula"),
+	COMERCIAL("Comercial");
 	
 	private String descricao;
 	
