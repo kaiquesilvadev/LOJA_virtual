@@ -59,10 +59,6 @@ public class usuarioService {
 		return usuario;
 	}
 
-	/*
-	 * TODO: usuario padrao deve ser enviado para o gmail do usuario , implementar
-	 * depois
-	 */
 	@Transactional
 	protected Usuario criaUserPadrao(Pessoa Pessoa) {
 
