@@ -19,6 +19,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -37,6 +39,7 @@ public class Usuario implements UserDetails {
 	 * mês e dia) e não inclui a hora, minuto ou segundo.
 	 */
 	@UpdateTimestamp
+	@Temporal(TemporalType.DATE)
 	private Date dataAtuaSenha;
 
 	@JoinColumn(name = "pessoa_id")
