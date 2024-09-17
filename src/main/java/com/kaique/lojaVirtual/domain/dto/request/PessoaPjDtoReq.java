@@ -22,7 +22,7 @@ public class PessoaPjDtoReq {
 	@Size(max = 11 , min = 10)
 	private String telefone;
 	
-	//@CNPJ
+	@CNPJ
 	private String cnpj;
 	
 	@NotBlank

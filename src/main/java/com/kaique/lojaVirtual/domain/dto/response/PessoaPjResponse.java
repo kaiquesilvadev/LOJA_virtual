@@ -7,6 +7,7 @@ import com.kaique.lojaVirtual.domain.entity.PessoaJuridica;
 
 public class PessoaPjResponse {
 
+	private Long id;
 	private String nome;
 	private String email;
 	private String telefone;
@@ -22,6 +23,7 @@ public class PessoaPjResponse {
 	}
 
 	public PessoaPjResponse(PessoaJuridica pessoa) {
+		this.id = pessoa.getId();
 		this.nome = pessoa.getNome();
 		this.email = pessoa.getEmail();
 		this.telefone = pessoa.getTelefone();
@@ -31,6 +33,14 @@ public class PessoaPjResponse {
 		this.nomeFantasia = pessoa.getNomeFantasia();
 		this.razaoSocial = pessoa.getRazaoSocial();
 		this.enderecos = pessoa.getEnderecos().stream().map(enderecos -> new EnderecoRespCustoDto(enderecos)).toList();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void setNome(String nome) {
@@ -96,4 +106,5 @@ public class PessoaPjResponse {
 	public List<EnderecoRespCustoDto> getEnderecos() {
 		return enderecos;
 	}
+
 }

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.kaique.lojaVirtual.domain.entity.PessoaJuridica;
 
 
-public interface PessoaRepository extends JpaRepository<PessoaJuridica, Long>{
+public interface PessoaJuridicaRepository extends JpaRepository<PessoaJuridica, Long>{
 
 
 	Boolean existsByEmail(String emial);

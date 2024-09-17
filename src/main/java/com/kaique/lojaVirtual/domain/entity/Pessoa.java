@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 /**
@@ -23,6 +24,7 @@ import jakarta.persistence.OneToMany;
  */
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "tb_pessoa")
 public abstract class Pessoa {
 
 	@Id
@@ -34,7 +36,7 @@ public abstract class Pessoa {
 	private String email;
 	private String telefone;
 
-	@OneToMany(mappedBy = "pessoa")
+	@OneToMany(mappedBy = "pessoa" , cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
 	private List<Usuario> usuarios = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "pessoa" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)

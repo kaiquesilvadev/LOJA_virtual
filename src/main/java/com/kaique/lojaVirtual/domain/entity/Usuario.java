@@ -10,15 +10,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -37,13 +39,15 @@ public class Usuario implements UserDetails {
 	 * mês e dia) e não inclui a hora, minuto ou segundo.
 	 */
 	@UpdateTimestamp
+	@Temporal(TemporalType.DATE)
 	private Date dataAtuaSenha;
 
 	@JoinColumn(name = "pessoa_id")
 	@ManyToOne
 	private Pessoa pessoa;
 
-	@OneToMany(cascade = CascadeType.REMOVE)
+	@ManyToMany
+	@JoinTable(name = "tb_usuario_acesso", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "acesso_id"))
 	private List<Acesso> acessos = new ArrayList<>();
 
 	public Usuario() {

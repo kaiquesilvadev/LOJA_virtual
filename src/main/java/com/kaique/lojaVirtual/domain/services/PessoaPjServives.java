@@ -10,13 +10,13 @@ import com.kaique.lojaVirtual.domain.dto.request.PessoaPjDtoReq;
 import com.kaique.lojaVirtual.domain.entity.Endereco;
 import com.kaique.lojaVirtual.domain.entity.PessoaJuridica;
 import com.kaique.lojaVirtual.domain.exceptions.EntidadeExistenteException;
-import com.kaique.lojaVirtual.domain.repositories.PessoaRepository;
+import com.kaique.lojaVirtual.domain.repositories.PessoaJuridicaRepository;
 
 @Service
 public class PessoaPjServives {
 
 	@Autowired
-	private PessoaRepository repository;
+	private PessoaJuridicaRepository repository;
 
 	@Autowired
 	private usuarioService usuarioService;
@@ -35,7 +35,7 @@ public class PessoaPjServives {
 
 		PessoaJuridica pessoa = repository.save(converteDto(dto));
 		List<Endereco> enderecos = dto.getEndereco().stream().map(endereco ->  enderecoService.converteEndereco(endereco, pessoa , pessoa)).toList();
-		usuarioService.criaUserPadrao(pessoa);
+		usuarioService.criaUserPadrao(pessoa ,  "ROLE_ADMIN");
 
 		pessoa.getEnderecos().addAll(enderecoService.salvaEnderecoList(enderecos));
 		return pessoa;
