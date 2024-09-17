@@ -60,7 +60,7 @@ public class usuarioService {
 	}
 
 	@Transactional
-	protected Usuario criaUserPadrao(Pessoa Pessoa) {
+	protected Usuario criaUserPadrao(Pessoa Pessoa , String role) {
 
 		Usuario usuario = new Usuario();
 
@@ -68,7 +68,7 @@ public class usuarioService {
 		usuario.setSenha(passwordEncoder.encode(Pessoa.getEmail()));
 		usuario.setPessoa(Pessoa);
 
-		addRoles(usuario, "ROLE_ADMIN");
+		addRoles(usuario, role);
 
 		EmailDTO emailDTO = new EmailDTO();
 		emailDTO.setSubject("Bem-vindo à Loja Virtual - Detalhes da sua conta");
