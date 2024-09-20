@@ -20,7 +20,7 @@ public class PessoaFsUserServives {
 
 	@Autowired
 	private usuarioService usuarioService;
-	
+
 	@Autowired
 	private EnderecoService enderecoService;
 
@@ -34,13 +34,13 @@ public class PessoaFsUserServives {
 			throw new EntidadeExistenteException("Já existe CPF cadastrado com o número: " + dto.getCpf());
 
 		PessoaFisica pessoa = repository.save(converteDto(dto));
-		List<Endereco> enderecos = dto.getEnderecos().stream().map(endereco ->  enderecoService.converteEndereco(endereco, pessoa , null)).toList();
-		usuarioService.criaUserPadrao(pessoa , "ROLE_USER");
+		List<Endereco> enderecos = dto.getEnderecos().stream()
+				.map(endereco -> enderecoService.converteEndereco(endereco, pessoa, null)).toList();
+		usuarioService.criaUserPadrao(pessoa, "ROLE_USER");
 
 		pessoa.getEnderecos().addAll(enderecoService.salvaEnderecoList(enderecos));
 		return pessoa;
 	}
-
 
 	private PessoaFisica converteDto(PessoaFsUserDtoReq dtoReq) {
 
@@ -48,9 +48,9 @@ public class PessoaFsUserServives {
 		pessoa.setNome(dtoReq.getNome());
 		pessoa.setEmail(dtoReq.getEmail());
 		pessoa.setTelefone(dtoReq.getTelefone());
-	    pessoa.setCpf(dtoReq.getCpf());
-	    pessoa.setDataNascimento(dtoReq.getDataNascimento());
-		
+		pessoa.setCpf(dtoReq.getCpf());
+		pessoa.setDataNascimento(dtoReq.getDataNascimento());
+
 		return pessoa;
 	}
 }

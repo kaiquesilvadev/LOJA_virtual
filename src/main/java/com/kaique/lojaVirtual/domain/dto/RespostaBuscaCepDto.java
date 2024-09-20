@@ -15,13 +15,14 @@ public class RespostaBuscaCepDto {
 	private String gia;
 	private String ddd;
 	private String siafi;
+	private String erro;
 
 	public RespostaBuscaCepDto() {
 	}
 
 	public RespostaBuscaCepDto(String cep, String logradouro, String complemento, String unidade, String bairro,
 			String localidade, String uf, String estado, String regiao, String ibge, String gia, String ddd,
-			String siafi) {
+			String siafi, String erro) {
 		this.cep = cep;
 		this.logradouro = logradouro;
 		this.complemento = complemento;
@@ -35,6 +36,7 @@ public class RespostaBuscaCepDto {
 		this.gia = gia;
 		this.ddd = ddd;
 		this.siafi = siafi;
+		this.erro = erro;
 	}
 
 	public String getCep() {
@@ -141,4 +143,11 @@ public class RespostaBuscaCepDto {
 		this.siafi = siafi;
 	}
 
+	public String getErro() {
+		return erro;
+	}
+
+	public void setErro(String erro) {
+		this.erro = erro;
+	}
 }
