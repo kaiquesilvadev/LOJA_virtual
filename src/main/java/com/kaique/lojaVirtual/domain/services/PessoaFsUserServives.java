@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kaique.lojaVirtual.domain.dto.request.PessoaFsUserDtoReq;
@@ -24,13 +25,24 @@ public class PessoaFsUserServives {
 	@Autowired
 	private EnderecoService enderecoService;
 
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public PessoaFisica buscaPorCpf(String cpf) {
+		return repository.buscaCpf(cpf)
+				.orElseThrow(() -> new EntidadeExistenteException("Já existe CNPJ cadastrado com o número: " + cpf));
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<PessoaFisica> buscaPorNome(String nome) {
+		return repository.buscaPorNome(nome);
+	}
+
 	@Transactional
 	public PessoaFisica salvaPessoaUser(PessoaFsUserDtoReq dto) {
 
 		if (repository.existsByEmail(dto.getEmail()) == true)
 			throw new EntidadeExistenteException("Email ja cadastrado no sistema.");
 
-		if (repository.cnpjExistente(dto.getCpf()).isPresent())
+		if (repository.buscaCpf(dto.getCpf()).isPresent())
 			throw new EntidadeExistenteException("Já existe CPF cadastrado com o número: " + dto.getCpf());
 
 		PessoaFisica pessoa = repository.save(converteDto(dto));

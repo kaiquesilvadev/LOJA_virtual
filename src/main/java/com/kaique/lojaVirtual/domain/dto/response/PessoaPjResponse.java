@@ -18,8 +18,7 @@ public class PessoaPjResponse {
 	private String razaoSocial;
 	private List<EnderecoRespCustoDto> enderecos = new ArrayList<>();
 
-	public String getNome() {
-		return nome;
+	public PessoaPjResponse() {
 	}
 
 	public PessoaPjResponse(PessoaJuridica pessoa) {
@@ -33,6 +32,22 @@ public class PessoaPjResponse {
 		this.nomeFantasia = pessoa.getNomeFantasia();
 		this.razaoSocial = pessoa.getRazaoSocial();
 		this.enderecos = pessoa.getEnderecos().stream().map(enderecos -> new EnderecoRespCustoDto(enderecos)).toList();
+	}
+
+	public List<PessoaPjResponse> converteListEntitry(List<PessoaJuridica> list) {
+
+		List<PessoaPjResponse> novalista = new ArrayList<>();
+
+		for (int x = 0; x < list.size(); x++) {
+			PessoaPjResponse dtoResponse = new PessoaPjResponse(list.get(x));
+			novalista.add(dtoResponse);
+		}
+
+		return novalista;
+	}
+
+	public String getNome() {
+		return nome;
 	}
 
 	public Long getId() {
@@ -106,5 +121,4 @@ public class PessoaPjResponse {
 	public List<EnderecoRespCustoDto> getEnderecos() {
 		return enderecos;
 	}
-
 }
