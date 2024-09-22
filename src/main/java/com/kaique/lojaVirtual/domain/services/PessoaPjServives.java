@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kaique.lojaVirtual.domain.dto.request.PessoaPjDtoReq;
@@ -19,10 +20,21 @@ public class PessoaPjServives {
 	private PessoaJuridicaRepository repository;
 
 	@Autowired
-	private usuarioService usuarioService;
-	
+	private UsuarioService UsuarioService;
+
 	@Autowired
 	private EnderecoService enderecoService;
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<PessoaJuridica> buscaPorNome(String nome) {
+		return repository.buscaPorNome(nome);
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public PessoaJuridica buscaPorCnpj(String Cnpj) {
+		return repository.buscaCnpj(Cnpj)
+				.orElseThrow(() -> new EntidadeExistenteException("Já existe CNPJ cadastrado com o número: " + Cnpj));
+	}
 
 	@Transactional
 	public PessoaJuridica salvaPessoaPj(PessoaPjDtoReq dto) {
@@ -30,17 +42,17 @@ public class PessoaPjServives {
 		if (repository.existsByEmail(dto.getEmail()) == true)
 			throw new EntidadeExistenteException("Email ja cadastrado no sistema.");
 
-		if (repository.cnpjExistente(dto.getCnpj()).isPresent())
+		if (repository.buscaCnpj(dto.getCnpj()).isPresent())
 			throw new EntidadeExistenteException("Já existe CNPJ cadastrado com o número: " + dto.getCnpj());
 
 		PessoaJuridica pessoa = repository.save(converteDto(dto));
-		List<Endereco> enderecos = dto.getEndereco().stream().map(endereco ->  enderecoService.converteEndereco(endereco, pessoa , pessoa)).toList();
-		usuarioService.criaUserPadrao(pessoa ,  "ROLE_ADMIN");
+		List<Endereco> enderecos = dto.getEndereco().stream()
+				.map(endereco -> enderecoService.converteEndereco(endereco, pessoa, pessoa)).toList();
+		UsuarioService.criaUserPadrao(pessoa, "ROLE_ADMIN");
 
 		pessoa.getEnderecos().addAll(enderecoService.salvaEnderecoList(enderecos));
 		return pessoa;
 	}
-
 
 	private PessoaJuridica converteDto(PessoaPjDtoReq dtoReq) {
 
@@ -53,7 +65,7 @@ public class PessoaPjServives {
 		pessoa.setInscMunicipal(dtoReq.getInscMunicipal());
 		pessoa.setNomeFantasia(dtoReq.getNomeFantasia());
 		pessoa.setRazaoSocial(dtoReq.getRazaoSocial());
-		
+
 		return pessoa;
 	}
 }

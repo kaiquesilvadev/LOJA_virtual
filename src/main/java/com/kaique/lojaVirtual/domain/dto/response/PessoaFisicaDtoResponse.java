@@ -31,8 +31,8 @@ public class PessoaFisicaDtoResponse {
 		this.dataNascimento = pessoa.getDataNascimento();
 		this.enderecos = pessoa.getEnderecos().stream().map(enderecos -> new EnderecoRespCustoDto(enderecos)).toList();
 	}
-	
-	public PessoaFisicaDtoResponse(PessoaFisica pessoa , PessoaJuridica empresa) {
+
+	public PessoaFisicaDtoResponse(PessoaFisica pessoa, PessoaJuridica empresa) {
 		this.id = pessoa.getId();
 		this.nome = pessoa.getNome();
 		this.email = pessoa.getEmail();
@@ -41,6 +41,18 @@ public class PessoaFisicaDtoResponse {
 		this.dataNascimento = pessoa.getDataNascimento();
 		this.empresa = new EmpresadtoRef(pessoa.getEmpresa());
 		this.enderecos = pessoa.getEnderecos().stream().map(enderecos -> new EnderecoRespCustoDto(enderecos)).toList();
+	}
+
+	public List<PessoaFisicaDtoResponse> converteListEntitry(List<PessoaFisica> list) {
+
+		List<PessoaFisicaDtoResponse> novalista = new ArrayList<>();
+
+		for (int x = 0; x < list.size(); x++) {
+			PessoaFisicaDtoResponse dtoResponse = new PessoaFisicaDtoResponse(list.get(x));
+			novalista.add(dtoResponse);
+		}
+
+		return novalista;
 	}
 
 	public Long getId() {

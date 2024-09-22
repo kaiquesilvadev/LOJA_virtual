@@ -1,7 +1,11 @@
 package com.kaique.lojaVirtual.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +25,17 @@ public class PessoaJuridicaContrller {
 	@Autowired
 	private PessoaPjServives servives;
 
-	@PostMapping()
+	@GetMapping("/buscaPorNome/{nome}")
+	public List<PessoaPjResponse> buscaPorNome(@PathVariable String nome) {
+		return new PessoaPjResponse().converteListEntitry(servives.buscaPorNome(nome));
+	}
+
+	@GetMapping("/buscaPorCnpj/{cnpj}")
+	public PessoaPjResponse buscaPorCnpj(@PathVariable String cnpj) {
+		return new PessoaPjResponse(servives.buscaPorCnpj(cnpj));
+	}
+
+	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public PessoaPjResponse salvaPessoaPj(@Valid @RequestBody PessoaPjDtoReq dto) {
 		return new PessoaPjResponse(servives.salvaPessoaPj(dto));

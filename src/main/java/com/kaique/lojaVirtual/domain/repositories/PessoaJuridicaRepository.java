@@ -1,5 +1,6 @@
 package com.kaique.lojaVirtual.domain.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +15,8 @@ public interface PessoaJuridicaRepository extends JpaRepository<PessoaJuridica, 
 	Boolean existsByEmail(String emial);
 	
     @Query("SELECT p FROM PessoaJuridica p WHERE p.cnpj = :cnpj")
-	Optional<PessoaJuridica> cnpjExistente(String cnpj);
+	Optional<PessoaJuridica> buscaCnpj(String cnpj);
+    
+    @Query("SELECT p FROM PessoaJuridica p WHERE LOWER(p.nome) LIKE LOWER(CONCAT('%', :nome, '%'))")
+    List<PessoaJuridica> buscaPorNome(String nome);
 }
