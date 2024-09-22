@@ -20,7 +20,7 @@ public class PessoaPjServives {
 	private PessoaJuridicaRepository repository;
 
 	@Autowired
-	private usuarioService usuarioService;
+	private UsuarioService UsuarioService;
 
 	@Autowired
 	private EnderecoService enderecoService;
@@ -48,7 +48,7 @@ public class PessoaPjServives {
 		PessoaJuridica pessoa = repository.save(converteDto(dto));
 		List<Endereco> enderecos = dto.getEndereco().stream()
 				.map(endereco -> enderecoService.converteEndereco(endereco, pessoa, pessoa)).toList();
-		usuarioService.criaUserPadrao(pessoa, "ROLE_ADMIN");
+		UsuarioService.criaUserPadrao(pessoa, "ROLE_ADMIN");
 
 		pessoa.getEnderecos().addAll(enderecoService.salvaEnderecoList(enderecos));
 		return pessoa;

@@ -20,7 +20,7 @@ import com.kaique.lojaVirtual.domain.repositories.AcessoRepository;
 import com.kaique.lojaVirtual.domain.repositories.UsuarioRepository;
 
 @Service
-public class usuarioService {
+public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository repository;
