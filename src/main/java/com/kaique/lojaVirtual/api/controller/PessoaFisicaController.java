@@ -19,8 +19,8 @@ import com.kaique.lojaVirtual.domain.services.PessoaFsUserServives;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/PessoaFisicas")
-public class PessoaFisicaContrller {
+@RequestMapping("/v1/PessoaFisicas")
+public class PessoaFisicaController {
 
 	@Autowired
 	private PessoaFsUserServives servives;
