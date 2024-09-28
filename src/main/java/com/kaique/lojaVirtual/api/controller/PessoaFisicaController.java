@@ -41,16 +41,8 @@ public class PessoaFisicaController {
 	}
 
 	@GetMapping("/listaEndereco")
-	public List<EnderecoRespCustoDto> buscaPorNome() {
-
-		List<EnderecoRespCustoDto> listCustoDtos = new ArrayList<>();
-		List<Endereco> listEndereco = psEnderecoService.ListaEnderecoPs();
-
-		for (int x = 0; x < listEndereco.size(); x++) {
-			listCustoDtos.add(new EnderecoRespCustoDto(listEndereco.get(x)));
-		}
-
-		return listCustoDtos;
+	public List<EnderecoRespCustoDto> listaEnderecoProprios() {
+		return EnderecoRespCustoDto.listaEnderecoProprios(psEnderecoService.ListaEnderecoPs());		
 	}
 
 	@GetMapping("/buscaPorCpf/{cpf}")
