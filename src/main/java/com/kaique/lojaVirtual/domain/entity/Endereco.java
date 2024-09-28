@@ -41,13 +41,13 @@ public class Endereco {
 
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
-	private Pessoa empresa;
+	private PessoaJuridica empresa;
 
 	public Endereco() {
 	}
 
 	public Endereco(Long id, String ruaLogra, String cep, String numero, String complemento, String bairro, String uf,
-			String cidade, String estado, Pessoa pessoa, TipoEndereco tipoEndereco, Pessoa empresa) {
+			String cidade, String estado, Pessoa pessoa, TipoEndereco tipoEndereco, PessoaJuridica empresa) {
 		this.id = id;
 		this.ruaLogra = ruaLogra;
 		this.cep = cep;
@@ -150,11 +150,11 @@ public class Endereco {
 		this.tipoEndereco = tipoEndereco;
 	}
 
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 
-	public void setEmpresa(Pessoa empresa) {
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
 

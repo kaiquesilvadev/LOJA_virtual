@@ -50,7 +50,7 @@ public class PessoaEnderecoService {
 	public Endereco AtualizaEnderecoPSFisica(EnderecoPSFisicaRequestDto dto, Long idEndereco) {
 		Usuario usuario = detailsServices.authenticated();
 		Endereco endereco = enderecoService.buscaPorId(idEndereco);
-		endereco = converteEnderecoPsFS(dto, endereco);
+		converteEnderecoPsFS(dto, endereco);
 
 		if (!usuario.getPessoa().equals(endereco.getPessoa()))
 			throw new UsuarioNaoAutorisadoException("Usuário não autorizado a atualizar esse endereço.");
@@ -90,7 +90,7 @@ public class PessoaEnderecoService {
 		return enderecoService.atualiza(dto, endereco , endereco.getPessoa(), endereco.getEmpresa());
 	}
 
-	protected Endereco converteEnderecoPsFS(EnderecoPSFisicaRequestDto dto, Endereco endereco) {
+	protected void converteEnderecoPsFS(EnderecoPSFisicaRequestDto dto, Endereco endereco) {
 
 		RespostaBuscaCepDto buscaCep = apiCepService.buscaCep(dto.getCep());
 
@@ -104,6 +104,5 @@ public class PessoaEnderecoService {
 		endereco.setEstado(buscaCep.getEstado());
 		endereco.setTipoEndereco(dto.getTipoEndereco());
 
-		return endereco;
 	}
 }

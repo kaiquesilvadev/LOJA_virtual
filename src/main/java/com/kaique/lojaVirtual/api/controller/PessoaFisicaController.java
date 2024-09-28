@@ -8,13 +8,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.lojaVirtual.domain.dto.request.EnderecoPSFisicaRequestDto;
 import com.kaique.lojaVirtual.domain.dto.request.PessoaFsUserDtoReq;
 import com.kaique.lojaVirtual.domain.dto.response.EnderecoRespCustoDto;
+import com.kaique.lojaVirtual.domain.dto.response.EnderecoResponseDto;
 import com.kaique.lojaVirtual.domain.dto.response.PessoaFisicaDtoResponse;
 import com.kaique.lojaVirtual.domain.entity.Endereco;
 import com.kaique.lojaVirtual.domain.services.PessoaEnderecoService;
@@ -59,5 +62,10 @@ public class PessoaFisicaController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public PessoaFisicaDtoResponse salvaPessoaUser(@Valid @RequestBody PessoaFsUserDtoReq dto) {
 		return new PessoaFisicaDtoResponse(servives.salvaPessoaUser(dto));
+	}
+	
+	@PutMapping("/atualizaEndereco/{idEnderco}")
+	public EnderecoResponseDto atualizaEndereco(@Valid @RequestBody EnderecoPSFisicaRequestDto dto, @PathVariable Long idEnderco) {
+		return new EnderecoResponseDto(psEnderecoService.AtualizaEnderecoPSFisica(dto, idEnderco));
 	}
 }

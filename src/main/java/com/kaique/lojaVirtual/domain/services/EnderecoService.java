@@ -11,6 +11,7 @@ import com.kaique.lojaVirtual.domain.dto.RespostaBuscaCepDto;
 import com.kaique.lojaVirtual.domain.dto.request.EnderecoRequestDto;
 import com.kaique.lojaVirtual.domain.entity.Endereco;
 import com.kaique.lojaVirtual.domain.entity.Pessoa;
+import com.kaique.lojaVirtual.domain.entity.PessoaJuridica;
 import com.kaique.lojaVirtual.domain.entity.Usuario;
 import com.kaique.lojaVirtual.domain.exceptions.EntidadeNaoEncontradaException;
 import com.kaique.lojaVirtual.domain.exceptions.UsuarioNaoAutorisadoException;
@@ -35,14 +36,14 @@ public class EnderecoService {
 	}
 
 	@Transactional
-	public Endereco salvaEndereco(EnderecoRequestDto dto, Pessoa pessoa, Pessoa empresa) {
+	public Endereco salvaEndereco(EnderecoRequestDto dto, Pessoa pessoa, PessoaJuridica empresa) {
 
 		Endereco endereco = converteEndereco(dto, pessoa, empresa , new Endereco());
 		return repository.save(endereco);
 	}
 	
 	@Transactional
-	public Endereco atualiza(EnderecoRequestDto dto, Endereco endereco, Pessoa pessoa, Pessoa empresa) {
+	public Endereco atualiza(EnderecoRequestDto dto, Endereco endereco, Pessoa pessoa, PessoaJuridica empresa) {
 
 		endereco = converteEndereco(dto, pessoa, empresa , endereco);
 		return repository.save(endereco);
@@ -68,7 +69,7 @@ public class EnderecoService {
 
 	}
 
-	protected Endereco converteEndereco(EnderecoRequestDto dto, Pessoa pessoa, Pessoa empresa , Endereco endereco) {
+	protected Endereco converteEndereco(EnderecoRequestDto dto, Pessoa pessoa, PessoaJuridica empresa , Endereco endereco) {
 
 		RespostaBuscaCepDto buscaCep = apiCepService.buscaCep(dto.getCep());
 
