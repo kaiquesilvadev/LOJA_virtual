@@ -11,6 +11,7 @@ import com.kaique.lojaVirtual.domain.dto.request.PessoaPjDtoReq;
 import com.kaique.lojaVirtual.domain.entity.Endereco;
 import com.kaique.lojaVirtual.domain.entity.PessoaJuridica;
 import com.kaique.lojaVirtual.domain.exceptions.EntidadeExistenteException;
+import com.kaique.lojaVirtual.domain.exceptions.EntidadeNaoEncontradaException;
 import com.kaique.lojaVirtual.domain.repositories.PessoaJuridicaRepository;
 
 @Service
@@ -24,6 +25,12 @@ public class PessoaPjServives {
 
 	@Autowired
 	private EnderecoService enderecoService;
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public PessoaJuridica buscaPorId(Long id) {
+		return repository.findById(id)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("ID de código '" + id + "' não encontrado ."));
+	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<PessoaJuridica> buscaPorNome(String nome) {
@@ -47,7 +54,7 @@ public class PessoaPjServives {
 
 		PessoaJuridica pessoa = repository.save(converteDto(dto));
 		List<Endereco> enderecos = dto.getEndereco().stream()
-				.map(endereco -> enderecoService.converteEndereco(endereco, pessoa, pessoa)).toList();
+				.map(endereco -> enderecoService.converteEndereco(endereco, pessoa, pessoa, new Endereco())).toList();
 		UsuarioService.criaUserPadrao(pessoa, "ROLE_ADMIN");
 
 		pessoa.getEnderecos().addAll(enderecoService.salvaEnderecoList(enderecos));

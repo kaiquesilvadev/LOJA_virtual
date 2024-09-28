@@ -46,6 +46,10 @@ public class Usuario implements UserDetails {
 	@ManyToOne
 	private Pessoa pessoa;
 
+	@ManyToOne
+	@JoinColumn(name = "empresa_id")
+	private PessoaJuridica empresa;
+
 	@ManyToMany
 	@JoinTable(name = "tb_usuario_acesso", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "acesso_id"))
 	private List<Acesso> acessos = new ArrayList<>();
@@ -53,12 +57,15 @@ public class Usuario implements UserDetails {
 	public Usuario() {
 	}
 
-	public Usuario(Long id, String login, String senha, Date dataAtuaSenha, Pessoa pessoa) {
+	public Usuario(Long id, String login, String senha, Date dataAtuaSenha, Pessoa pessoa, PessoaJuridica empresa,
+			List<Acesso> acessos) {
 		this.id = id;
 		this.login = login;
 		this.senha = senha;
 		this.dataAtuaSenha = dataAtuaSenha;
 		this.pessoa = pessoa;
+		this.empresa = empresa;
+		this.acessos = acessos;
 	}
 
 	@Override
@@ -114,6 +121,14 @@ public class Usuario implements UserDetails {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public PessoaJuridica getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(PessoaJuridica empresa) {
+		this.empresa = empresa;
 	}
 
 	public List<Acesso> getAcessos() {

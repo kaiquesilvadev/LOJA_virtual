@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -32,11 +33,15 @@ public class NotaFiscalVenda {
 	@JoinColumn(name = "venda_compra_virtual_id")
 	private VendaCompraVirtual vendaCompraVirtual;
 
+	@ManyToOne
+	@JoinColumn(name = "empresa_id")
+	private PessoaJuridica empresa;
+
 	public NotaFiscalVenda() {
 	}
 
 	public NotaFiscalVenda(Long id, String numero, String serie, String tipo, String xml, String pdf,
-			VendaCompraVirtual vendaCompraVirtual) {
+			VendaCompraVirtual vendaCompraVirtual, PessoaJuridica empresa) {
 		this.id = id;
 		this.numero = numero;
 		this.serie = serie;
@@ -44,6 +49,7 @@ public class NotaFiscalVenda {
 		this.xml = xml;
 		this.pdf = pdf;
 		this.vendaCompraVirtual = vendaCompraVirtual;
+		this.empresa = empresa;
 	}
 
 	public Long getId() {
@@ -100,6 +106,14 @@ public class NotaFiscalVenda {
 
 	public void setVendaCompraVirtual(VendaCompraVirtual vendaCompraVirtual) {
 		this.vendaCompraVirtual = vendaCompraVirtual;
+	}
+
+	public PessoaJuridica getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(PessoaJuridica empresa) {
+		this.empresa = empresa;
 	}
 
 	@Override

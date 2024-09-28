@@ -39,6 +39,10 @@ public class NotaFiscalCompra {
 	@ManyToOne
 	private Pessoa pessoa;
 
+	@ManyToOne
+	@JoinColumn(name = "empresa_id")
+	private PessoaJuridica empresa;
+
 	@OneToMany(mappedBy = "notaFiscalCompra", cascade = CascadeType.REMOVE)
 	private List<NotaItemProduto> notaItemProdutos = new ArrayList<>();
 
@@ -46,7 +50,8 @@ public class NotaFiscalCompra {
 	}
 
 	public NotaFiscalCompra(Long id, String numeroNota, String serieNota, String descricaoOds, BigDecimal valorTotal,
-			BigDecimal valorDesconto, BigDecimal valorIcms, OffsetDateTime dataCompra, Pessoa pessoa) {
+			BigDecimal valorDesconto, BigDecimal valorIcms, OffsetDateTime dataCompra, Pessoa pessoa,
+			PessoaJuridica empresa) {
 		this.id = id;
 		this.numeroNota = numeroNota;
 		this.serieNota = serieNota;
@@ -56,6 +61,7 @@ public class NotaFiscalCompra {
 		this.valorIcms = valorIcms;
 		this.dataCompra = dataCompra;
 		this.pessoa = pessoa;
+		this.empresa = empresa;
 	}
 
 	public Long getId() {
@@ -128,6 +134,14 @@ public class NotaFiscalCompra {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public PessoaJuridica getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(PessoaJuridica empresa) {
+		this.empresa = empresa;
 	}
 
 	public List<NotaItemProduto> getNotaItemProdutos() {
