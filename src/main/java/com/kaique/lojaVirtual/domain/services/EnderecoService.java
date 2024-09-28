@@ -4,27 +4,47 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kaique.lojaVirtual.domain.dto.RespostaBuscaCepDto;
 import com.kaique.lojaVirtual.domain.dto.request.EnderecoRequestDto;
 import com.kaique.lojaVirtual.domain.entity.Endereco;
 import com.kaique.lojaVirtual.domain.entity.Pessoa;
-import com.kaique.lojaVirtual.domain.repositories.enderecoRepository;
+import com.kaique.lojaVirtual.domain.entity.Usuario;
+import com.kaique.lojaVirtual.domain.exceptions.EntidadeNaoEncontradaException;
+import com.kaique.lojaVirtual.domain.exceptions.UsuarioNaoAutorisadoException;
+import com.kaique.lojaVirtual.domain.repositories.EnderecoRepository;
 
 @Service
 public class EnderecoService {
 
 	@Autowired
-	private enderecoRepository repository;
-	
+	private EnderecoRepository repository;
+
 	@Autowired
 	private IntegracaoApiCepService apiCepService;
 
-	@Transactional
-	public Endereco salvaEndereco(EnderecoRequestDto dto, Pessoa pessoa , Pessoa empresa) {
+	@Autowired
+	private ImplementacaoUserDetailsServices detailsServices;
 
-		Endereco endereco = converteEndereco(dto, pessoa , empresa);
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public Endereco buscaPorId(Long id) {
+		return repository.findById(id)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("ID de código '" + id + "' não encontrado ."));
+	}
+
+	@Transactional
+	public Endereco salvaEndereco(EnderecoRequestDto dto, Pessoa pessoa, Pessoa empresa) {
+
+		Endereco endereco = converteEndereco(dto, pessoa, empresa , new Endereco());
+		return repository.save(endereco);
+	}
+	
+	@Transactional
+	public Endereco atualiza(EnderecoRequestDto dto, Endereco endereco, Pessoa pessoa, Pessoa empresa) {
+
+		endereco = converteEndereco(dto, pessoa, empresa , endereco);
 		return repository.save(endereco);
 	}
 	
@@ -34,11 +54,22 @@ public class EnderecoService {
 		return repository.saveAll(enderecos);
 	}
 
-	protected Endereco converteEndereco(EnderecoRequestDto dto, Pessoa pessoa , Pessoa empresa) {
+	@Transactional
+	public void deletar(Long id) {
 
-		
-		Endereco endereco = new Endereco();
-				
+		Usuario usuario = detailsServices.authenticated();
+		Endereco endereco = buscaPorId(id);
+
+		// TODO: depois de fazer o Crude de acesso valida se usuario é admim pq ai ele tbm pode deletar o email
+		if (!usuario.getPessoa().equals(endereco.getPessoa()))
+			throw new UsuarioNaoAutorisadoException("Usuário não autorizado a apagar esse endereço.");
+
+		repository.deleteById(id);
+
+	}
+
+	protected Endereco converteEndereco(EnderecoRequestDto dto, Pessoa pessoa, Pessoa empresa , Endereco endereco) {
+
 		RespostaBuscaCepDto buscaCep = apiCepService.buscaCep(dto.getCep());
 
 		endereco.setRuaLogra(buscaCep.getLogradouro());
@@ -52,7 +83,7 @@ public class EnderecoService {
 		endereco.setTipoEndereco(dto.getTipoEndereco());
 		endereco.setPessoa(pessoa);
 		endereco.setEmpresa(empresa);
-		
+
 		return endereco;
 	}
 }
