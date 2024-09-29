@@ -1,5 +1,8 @@
 package com.kaique.lojaVirtual.domain.dto.response;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.kaique.lojaVirtual.domain.entity.Endereco;
 import com.kaique.lojaVirtual.domain.enuns.TipoEndereco;
 
@@ -20,6 +23,17 @@ public class EnderecoRespCustoDto {
 		this.cidade = endereco.getCidade();
 		this.estado = endereco.getEstado();
 		this.tipoEndereco = endereco.getTipoEndereco();
+	}
+	
+	public static List<EnderecoRespCustoDto> listaEnderecoProprios(List<Endereco> listEndereco) {
+
+		List<EnderecoRespCustoDto> listCustoDtos = new ArrayList<>();
+
+		for (int x = 0; x < listEndereco.size(); x++) {
+			listCustoDtos.add(new EnderecoRespCustoDto(listEndereco.get(x)));
+		}
+
+		return listCustoDtos;
 	}
 	
 	public Long getId() {

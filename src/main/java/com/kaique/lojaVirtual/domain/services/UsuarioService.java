@@ -13,6 +13,7 @@ import com.kaique.lojaVirtual.domain.dto.EmailDTO;
 import com.kaique.lojaVirtual.domain.dto.request.UsuarioRequestDto;
 import com.kaique.lojaVirtual.domain.entity.Acesso;
 import com.kaique.lojaVirtual.domain.entity.Pessoa;
+import com.kaique.lojaVirtual.domain.entity.PessoaJuridica;
 import com.kaique.lojaVirtual.domain.entity.Usuario;
 import com.kaique.lojaVirtual.domain.exceptions.EntidadeExistenteException;
 import com.kaique.lojaVirtual.domain.exceptions.EntidadeNaoEncontradaException;
@@ -60,13 +61,14 @@ public class UsuarioService {
 	}
 
 	@Transactional
-	protected Usuario criaUserPadrao(Pessoa Pessoa , String role) {
+	protected Usuario criaUserPadrao(Pessoa Pessoa , String role , PessoaJuridica empresa) {
 
 		Usuario usuario = new Usuario();
 
 		usuario.setLogin(Pessoa.getEmail());
 		usuario.setSenha(passwordEncoder.encode(Pessoa.getEmail()));
 		usuario.setPessoa(Pessoa);
+		usuario.setEmpresa(empresa);
 
 		addRoles(usuario, role);
 

@@ -48,7 +48,7 @@ public class PessoaFsUserServives {
 		PessoaFisica pessoa = repository.save(converteDto(dto));
 		List<Endereco> enderecos = dto.getEnderecos().stream()
 				.map(endereco -> enderecoService.converteEndereco(endereco, pessoa, null , new Endereco())).toList();
-		UsuarioService.criaUserPadrao(pessoa, "ROLE_USER");
+		UsuarioService.criaUserPadrao(pessoa, "ROLE_USER" , null);
 
 		pessoa.getEnderecos().addAll(enderecoService.salvaEnderecoList(enderecos));
 		return pessoa;

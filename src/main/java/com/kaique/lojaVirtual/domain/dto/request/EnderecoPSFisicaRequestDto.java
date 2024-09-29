@@ -1,6 +1,5 @@
 package com.kaique.lojaVirtual.domain.dto.request;
 
-import com.kaique.lojaVirtual.domain.entity.Pessoa;
 import com.kaique.lojaVirtual.domain.enuns.TipoEndereco;
 
 import jakarta.validation.constraints.NotBlank;
@@ -17,7 +16,6 @@ public class EnderecoPSFisicaRequestDto {
 	private String numero;
 	private String complemento;
 	private String bairro;
-	private Pessoa pessoa;
 	
 	@NotNull
 	private TipoEndereco tipoEndereco;
@@ -60,14 +58,6 @@ public class EnderecoPSFisicaRequestDto {
 
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
-	}
-
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
 	}
 
 	public TipoEndereco getTipoEndereco() {
