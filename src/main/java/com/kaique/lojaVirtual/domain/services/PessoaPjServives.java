@@ -55,7 +55,7 @@ public class PessoaPjServives {
 		PessoaJuridica pessoa = repository.save(converteDto(dto));
 		List<Endereco> enderecos = dto.getEndereco().stream()
 				.map(endereco -> enderecoService.converteEndereco(endereco, pessoa, pessoa, new Endereco())).toList();
-		UsuarioService.criaUserPadrao(pessoa, "ROLE_ADMIN");
+		UsuarioService.criaUserPadrao(pessoa, "ROLE_ADMIN" , pessoa);
 
 		pessoa.getEnderecos().addAll(enderecoService.salvaEnderecoList(enderecos));
 		return pessoa;

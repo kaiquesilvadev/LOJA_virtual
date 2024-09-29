@@ -1,6 +1,5 @@
 package com.kaique.lojaVirtual.api.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import com.kaique.lojaVirtual.domain.dto.request.PessoaFsUserDtoReq;
 import com.kaique.lojaVirtual.domain.dto.response.EnderecoRespCustoDto;
 import com.kaique.lojaVirtual.domain.dto.response.EnderecoResponseDto;
 import com.kaique.lojaVirtual.domain.dto.response.PessoaFisicaDtoResponse;
-import com.kaique.lojaVirtual.domain.entity.Endereco;
 import com.kaique.lojaVirtual.domain.services.PessoaEnderecoService;
 import com.kaique.lojaVirtual.domain.services.PessoaFsUserServives;
 

@@ -37,6 +37,12 @@ public class PessoaEnderecoService {
 	private EnderecoRepository enderecoRepository;
 
 	@Transactional(propagation = Propagation.SUPPORTS)
+	public Pessoa buscaPessoaPorId(Long idPessoa) {
+		return pessoaRepository.findById(idPessoa).orElseThrow(() -> new EntidadeNaoEncontradaException(
+				"ID de pessoa com código '" + idPessoa + "' não encontrado ."));
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Endereco> ListaEnderecoPs() {
 
 		Usuario usuario = detailsServices.authenticated();
@@ -45,7 +51,7 @@ public class PessoaEnderecoService {
 		return pessoa.getEnderecos();
 	}
 
-	/* so quem pode atualizar o endereço e o proprio usuario */
+	/* TODO : so quem pode atualizar o endereço e o proprio usuario */
 	@Transactional
 	public Endereco AtualizaEnderecoPSFisica(EnderecoPSFisicaRequestDto dto, Long idEndereco) {
 		Usuario usuario = detailsServices.authenticated();
@@ -58,23 +64,32 @@ public class PessoaEnderecoService {
 		return enderecoRepository.save(endereco);
 	}
 
-	// so quem pode atualizar o endereço e o proprio usuario ou admim da empresa, validar se admim pertence a empresa que ele quer atualizar o endereco
+	/*
+	 * TODO: regra de negocio , so quem pode atualizar o endereço e o proprio
+	 * usuario ou admim da empresa, validar se admim pertence a empresa que ele quer
+	 * atualizar o endereco
+	 */
 	@Transactional
 	public Endereco AtualizaEnderecoPSJuridica(EnderecoRequestDto dto, Long idEndereco, Long idPessoa) {
 
 		Usuario usuario = detailsServices.authenticated();
 		Endereco endereco = enderecoService.buscaPorId(idEndereco);
-		Pessoa pessoa = pessoaRepository.findById(idPessoa).orElseThrow(
-				() -> new EntidadeNaoEncontradaException("ID de código '" + idPessoa + "' não encontrado ."));
+		Pessoa pessoa = buscaPessoaPorId(idPessoa);
 
+		validaAtualizacao(idEndereco, idPessoa, usuario, endereco, pessoa);
+
+		return enderecoService.atualiza(dto, endereco, endereco.getPessoa(), endereco.getEmpresa());
+	}
+
+	public void validaAtualizacao(Long idEndereco, Long idPessoa, Usuario usuario, Endereco endereco, Pessoa pessoa) {
 		if (!endereco.getPessoa().equals(pessoa))
-			throw new UsuarioNaoAutorisadoException("Endereço com id " + idEndereco + " não encontrado para a pessoa com id " + idPessoa);
+			throw new UsuarioNaoAutorisadoException(
+					"Endereço com id " + idEndereco + " não encontrado para a pessoa com id " + idPessoa);
 
-		boolean usuarioProprio = pessoa.getUsuarios().stream()
-				.anyMatch(u -> u.getId().equals(usuario.getId()));
-		
-		boolean usuarioEFuncionario = pessoa.getUsuarios().stream()
-			    .anyMatch(u -> u.getEmpresa() != null && u.getEmpresa().getId().equals(pessoa.getId()));
+		boolean usuarioProprio = pessoa.getUsuarios().stream().anyMatch(u -> u.getId().equals(usuario.getId()));
+
+		boolean usuarioEFuncionario = pessoa.getUsuarios().stream().anyMatch(u -> u.getEmpresa() != null
+				&& usuario.getEmpresa() != null && u.getEmpresa().equals(usuario.getEmpresa()));
 
 		boolean usuarioAdmin = usuario.getAcessos().stream()
 				.anyMatch(acesso -> acesso.getAuthority().equals("ROLE_ADMIN"));
@@ -82,12 +97,16 @@ public class PessoaEnderecoService {
 		if (!usuarioProprio && !usuarioAdmin) {
 			throw new UsuarioNaoAutorisadoException("Usuário não tem permissão para atualizar este endereço.");
 		}
-		
-		if (!usuarioAdmin && usuarioEFuncionario) {
-			throw new UsuarioNaoAutorisadoException("Usuário não tem permissão para atualizar este endereço.");
+
+		if (usuarioAdmin && usuario.getEmpresa() != null && !usuario.getEmpresa().equals(endereco.getEmpresa())) {
+			throw new UsuarioNaoAutorisadoException(
+					"Você não tem permissão para atualizar o endereço de uma pessoa fora da sua empresa.");
 		}
 
-		return enderecoService.atualiza(dto, endereco , endereco.getPessoa(), endereco.getEmpresa());
+		if (!usuarioAdmin && !usuarioEFuncionario) {
+			throw new UsuarioNaoAutorisadoException(
+					"Esse endereço não pertence a um usuário da sua empresa, e você não tem permissão para atualizá-lo.");
+		}
 	}
 
 	protected void converteEnderecoPsFS(EnderecoPSFisicaRequestDto dto, Endereco endereco) {
