@@ -29,20 +29,16 @@ public class Produto {
 
 	@Column(columnDefinition = "TEXT")
 	private String descricao;
-
-	@ManyToOne
-	@JoinColumn(name = "nota_item_produto")
-	private NotaItemProduto notaItemProduto;
-	private Boolean ativo;
+	private Boolean ativo = Boolean.TRUE;
 	private Double peso;
 	private Double largura;
 	private Double autura;
 	private Double profundidade;
 	private BigDecimal valorVenda;
-	private Integer qtdEstoque;
-	private Integer qtdeAletaEstoque;
-	private Boolean alertaQtdEstoque;
-	private Integer qtdCliente;
+	private Integer qtdEstoque = 0;
+	private Integer qtdeAletaEstoque = 0;
+	private Boolean alertaQtdEstoque = Boolean.FALSE;
+	private Integer qtdeClique = 0;
 
 	@ManyToOne
 	@JoinColumn(name = "marca_produto_id")
@@ -55,21 +51,24 @@ public class Produto {
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<ImagemProduto> imagemProdutos = new ArrayList<>();
 
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<AvaliacaoProduto> avaliacoes = new ArrayList<>();
+
+	@ManyToOne
+	@JoinColumn(name = "empresa_id")
+	private PessoaJuridica empresa;
 
 	public Produto() {
 	}
 
-	public Produto(Long id, String tipoUnidade, String nome, String descricao, NotaItemProduto notaItemProduto,
-			Boolean ativo, Double peso, Double largura, Double autura, Double profundidade, BigDecimal valorVenda,
-			Integer qtdEstoque, Integer qtdeAletaEstoque, Boolean alertaQtdEstoque,
-			Integer qtdCliente, MarcaProduto marcaProduto, CategoriaProduto categoriaProduto) {
+	public Produto(Long id, String tipoUnidade, String nome, String descricao, Boolean ativo, Double peso,
+			Double largura, Double autura, Double profundidade, BigDecimal valorVenda, Integer qtdEstoque,
+			Integer qtdeAletaEstoque, Boolean alertaQtdEstoque, Integer qtdeClique, MarcaProduto marcaProduto,
+			CategoriaProduto categoriaProduto, PessoaJuridica empresa) {
 		this.id = id;
 		this.tipoUnidade = tipoUnidade;
 		this.nome = nome;
 		this.descricao = descricao;
-		this.notaItemProduto = notaItemProduto;
 		this.ativo = ativo;
 		this.peso = peso;
 		this.largura = largura;
@@ -79,9 +78,10 @@ public class Produto {
 		this.qtdEstoque = qtdEstoque;
 		this.qtdeAletaEstoque = qtdeAletaEstoque;
 		this.alertaQtdEstoque = alertaQtdEstoque;
-		this.qtdCliente = qtdCliente;
+		this.qtdeClique = qtdeClique;
 		this.marcaProduto = marcaProduto;
 		this.categoriaProduto = categoriaProduto;
+		this.empresa = empresa;
 	}
 
 	public Long getId() {
@@ -114,14 +114,6 @@ public class Produto {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-	public NotaItemProduto getNotaItemProduto() {
-		return notaItemProduto;
-	}
-
-	public void setNotaItemProduto(NotaItemProduto notaItemProduto) {
-		this.notaItemProduto = notaItemProduto;
 	}
 
 	public Boolean getAtivo() {
@@ -196,12 +188,12 @@ public class Produto {
 		this.alertaQtdEstoque = alertaQtdEstoque;
 	}
 
-	public Integer getQtdCliente() {
-		return qtdCliente;
+	public Integer getQtdeClique() {
+		return qtdeClique;
 	}
 
-	public void setQtdCliente(Integer qtdCliente) {
-		this.qtdCliente = qtdCliente;
+	public void setQtdeClique(Integer qtdeClique) {
+		this.qtdeClique = qtdeClique;
 	}
 
 	public MarcaProduto getMarcaProduto() {
@@ -218,6 +210,14 @@ public class Produto {
 
 	public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
 		this.categoriaProduto = categoriaProduto;
+	}
+
+	public PessoaJuridica getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(PessoaJuridica empresa) {
+		this.empresa = empresa;
 	}
 
 	public List<ImagemProduto> getImagemProdutos() {
