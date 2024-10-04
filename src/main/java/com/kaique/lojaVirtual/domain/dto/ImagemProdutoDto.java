@@ -1,12 +1,6 @@
 package com.kaique.lojaVirtual.domain.dto;
 
-import com.kaique.lojaVirtual.domain.dto.referencias.PessoaRefDto;
-import com.kaique.lojaVirtual.domain.dto.referencias.ProdutoDtoRef;
-import com.kaique.lojaVirtual.domain.entity.PessoaJuridica;
-
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public class ImagemProdutoDto {
 
@@ -18,14 +12,6 @@ public class ImagemProdutoDto {
 
 	@NotBlank
 	private String linkTouTuber;
-
-	@NotNull
-	@Valid
-	private ProdutoDtoRef produto;
-	
-	@NotNull
-	@Valid
-	private PessoaRefDto empresa;
 
 	public String getImagemOriginal() {
 		return imagemOriginal;
@@ -49,14 +35,6 @@ public class ImagemProdutoDto {
 
 	public void setLinkTouTuber(String linkTouTuber) {
 		this.linkTouTuber = linkTouTuber;
-	}
-
-	public ProdutoDtoRef getProduto() {
-		return produto;
-	}
-
-	public void setProduto(ProdutoDtoRef produto) {
-		this.produto = produto;
 	}
 
 }

@@ -7,17 +7,18 @@ import java.util.List;
 import com.kaique.lojaVirtual.domain.dto.ImagemProdutoDto;
 import com.kaique.lojaVirtual.domain.dto.referencias.CategoriaProdutoDtoRef;
 import com.kaique.lojaVirtual.domain.dto.referencias.MarcaProdutoDtoRef;
-import com.kaique.lojaVirtual.domain.dto.referencias.PessoaRefDto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class ProdutoDtoRequest {
 
 	@NotBlank
 	private String tipoUnidade;
 	
+	@Size(min = 10)
 	@NotBlank
 	private String nome;
 	
@@ -52,12 +53,9 @@ public class ProdutoDtoRequest {
 
 	@NotNull
 	@Valid
-	private PessoaRefDto empresa;
-
-	@NotNull
-	@Valid
 	private CategoriaProdutoDtoRef categoriaProduto;
 
+	@Size(min = 3 , max = 6 , message = "Você so pode cadastrar no minimo 3 img e no maximo 6.")
 	@NotNull
 	@Valid
 	private List<ImagemProdutoDto> imagemProdutos = new ArrayList<>();
@@ -159,14 +157,6 @@ public class ProdutoDtoRequest {
 
 	public void setMarcaProduto(MarcaProdutoDtoRef marcaProduto) {
 		this.marcaProduto = marcaProduto;
-	}
-
-	public PessoaRefDto getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(PessoaRefDto empresa) {
-		this.empresa = empresa;
 	}
 
 	public CategoriaProdutoDtoRef getCategoriaProduto() {
