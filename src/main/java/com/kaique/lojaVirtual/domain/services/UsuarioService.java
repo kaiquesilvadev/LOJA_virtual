@@ -46,6 +46,11 @@ public class UsuarioService {
 
 		return repository.save(converteUser(dto));
 	}
+	
+	public Optional<Usuario> buscaAcessoUsuario(Long id , String acesso) {
+		
+		return repository.buscaAcessoUsuario(id, acesso);
+	}
 
 	@Transactional
 	public Usuario addRoles(Usuario usuario, String role) {

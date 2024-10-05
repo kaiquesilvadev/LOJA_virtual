@@ -68,6 +68,11 @@ public class Usuario implements UserDetails {
 		this.acessos = acessos;
 	}
 
+	public boolean validaAcesso(String acesso) {
+		return this.getAcessos().stream()
+				.anyMatch(a -> a.getDescricao().equalsIgnoreCase(acesso));
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return acessos;
