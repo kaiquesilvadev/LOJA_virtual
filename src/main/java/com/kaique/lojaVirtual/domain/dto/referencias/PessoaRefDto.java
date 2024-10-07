@@ -2,8 +2,11 @@ package com.kaique.lojaVirtual.domain.dto.referencias;
 
 import com.kaique.lojaVirtual.domain.entity.Pessoa;
 
+import jakarta.validation.constraints.NotNull;
+
 public class PessoaRefDto {
 
+	@NotNull
 	private Long id;
 	private String nome;
 

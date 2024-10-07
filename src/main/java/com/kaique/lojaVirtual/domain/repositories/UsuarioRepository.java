@@ -21,4 +21,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
     //@Query(nativeQuery = true , value = " SELECT * FROM TB_USUARIO WHERE data_atua_senha <= CURRENT_DATE - INTERVAL '90' DAY;")//consulta para h2
 	@Query("SELECT u FROM Usuario u WHERE u.dataAtuaSenha <= :cutoffDate")
 	List<Usuario> usuarioSenhaVencida(@Param("cutoffDate") LocalDate cutoffDate);
+	
+
+	@Query("SELECT u FROM Usuario u JOIN FETCH u.acessos a WHERE u.id = :idUsuario AND a.descricao = :acesso")
+	Optional<Usuario> buscaAcessoUsuario(Long idUsuario , String acesso);
 }

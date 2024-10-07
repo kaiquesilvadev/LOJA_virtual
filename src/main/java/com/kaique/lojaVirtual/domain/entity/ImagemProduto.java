@@ -30,15 +30,21 @@ public class ImagemProduto {
 	@ManyToOne
 	private Produto produto;
 
+	@ManyToOne
+	@JoinColumn(name = "empresa_id")
+	private PessoaJuridica empresa;
+
 	public ImagemProduto() {
 	}
 
-	public ImagemProduto(Long id, String imagemOriginal, String imagemMiniatura, String linkTouTuber, Produto produto) {
+	public ImagemProduto(Long id, String imagemOriginal, String imagemMiniatura, String linkTouTuber, Produto produto,
+			PessoaJuridica empresa) {
 		this.id = id;
 		this.imagemOriginal = imagemOriginal;
 		this.imagemMiniatura = imagemMiniatura;
 		this.linkTouTuber = linkTouTuber;
 		this.produto = produto;
+		this.empresa = empresa;
 	}
 
 	public Long getId() {
@@ -79,6 +85,14 @@ public class ImagemProduto {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public PessoaJuridica getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(PessoaJuridica empresa) {
+		this.empresa = empresa;
 	}
 
 	@Override

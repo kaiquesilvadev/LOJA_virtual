@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,7 +21,7 @@ public class MarcaProduto {
 	private Long id;
 	private String nomeDesc;
 	
-	@OneToMany(mappedBy = "marcaProduto")
+	@OneToMany(mappedBy = "marcaProduto" , fetch = FetchType.LAZY)
 	private List<Produto> produtos = new ArrayList<>();
 
 	public MarcaProduto() {
