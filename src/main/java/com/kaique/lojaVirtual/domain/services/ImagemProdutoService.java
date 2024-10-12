@@ -88,7 +88,7 @@ public class ImagemProdutoService {
 		}
 	}
 
-	private ImagemProduto convertdto(ImagemProdutoDto dto, ImagemProduto imagemProduto, PessoaJuridica juridica,
+	protected ImagemProduto convertdto(ImagemProdutoDto dto, ImagemProduto imagemProduto, PessoaJuridica juridica,
 			Produto produto) {
 
 		imagemProduto.setImagemOriginal(dto.getImagemOriginal());

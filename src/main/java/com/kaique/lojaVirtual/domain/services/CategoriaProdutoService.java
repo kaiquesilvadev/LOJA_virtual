@@ -27,7 +27,7 @@ public class CategoriaProdutoService {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public CategoriaProduto buscaPorId(Long id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException("ID de código '" + id + "' não encontrado ."));
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("ID de categoria com código '" + id + "' não encontrado ."));
 	}
 
 	/*TODO: uma empresa so pode ter a categoria da msm descrição salsa uma vez , apenas empresas pode add uma categoria*/

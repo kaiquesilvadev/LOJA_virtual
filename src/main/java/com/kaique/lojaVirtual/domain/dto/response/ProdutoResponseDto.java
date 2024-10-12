@@ -1,70 +1,62 @@
-package com.kaique.lojaVirtual.domain.entity;
+package com.kaique.lojaVirtual.domain.dto.response;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.kaique.lojaVirtual.domain.dto.referencias.CategoriaProdutoDtoRef;
+import com.kaique.lojaVirtual.domain.dto.referencias.MarcaProdutoDtoRef;
+import com.kaique.lojaVirtual.domain.entity.Produto;
 
-@Entity
-@Table(name = "tb_produto")
-public class Produto {
+public class ProdutoResponseDto {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String tipoUnidade;
 	private String nome;
-
-	@Column(columnDefinition = "TEXT")
 	private String descricao;
-	private Boolean ativo = Boolean.TRUE;
+	private Boolean ativo;
 	private Double peso;
 	private Double largura;
 	private Double autura;
 	private Double profundidade;
 	private BigDecimal valorVenda;
-	private Integer qtdEstoque = 0;
-	private Integer qtdeAletaEstoque = 0;
-	private Boolean alertaQtdEstoque = Boolean.FALSE;
-	private Integer qtdeClique = 0;
+	private Integer qtdEstoque;
+	private Integer qtdeAletaEstoque;
+	private Boolean alertaQtdEstoque;
+	private Integer qtdeClique;
+	private MarcaProdutoDtoRef marcaProduto;
+	private CategoriaProdutoDtoRef categoriaProduto;
 
-	@ManyToOne
-	@JoinColumn(name = "marca_produto_id")
-	private MarcaProduto marcaProduto;
+	private List<ImagemProdutoRespDto> imagemProdutos = new ArrayList<>();
 
-	@ManyToOne
-	@JoinColumn(name = "categoria_produto_id")
-	private CategoriaProduto categoriaProduto;
-
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<ImagemProduto> imagemProdutos = new ArrayList<>();
-
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<AvaliacaoProduto> avaliacoes = new ArrayList<>();
-
-	@ManyToOne
-	@JoinColumn(name = "empresa_id")
-	private PessoaJuridica empresa;
-
-	public Produto() {
+	public ProdutoResponseDto() {
 	}
 
-	public Produto(Long id, String tipoUnidade, String nome, String descricao, Boolean ativo, Double peso,
+	public ProdutoResponseDto(Produto produto) {
+		this.id = produto.getId();
+		this.tipoUnidade = produto.getTipoUnidade();
+		this.nome = produto.getNome();
+		this.descricao = produto.getDescricao();
+		this.ativo = produto.getAtivo();
+		this.peso = produto.getPeso();
+		this.largura = produto.getLargura();
+		this.autura = produto.getAutura();
+		this.profundidade = produto.getProfundidade();
+		this.valorVenda = produto.getValorVenda();
+		this.qtdEstoque = produto.getQtdEstoque();
+		this.qtdeAletaEstoque = produto.getQtdeAletaEstoque();
+		this.alertaQtdEstoque = produto.getAlertaQtdEstoque();
+		this.qtdeClique = produto.getQtdeClique();
+		this.marcaProduto = new MarcaProdutoDtoRef(produto.getMarcaProduto().getId());
+		this.categoriaProduto = new CategoriaProdutoDtoRef(produto.getCategoriaProduto().getId());
+
+		this.imagemProdutos = produto.getImagemProdutos().stream().map(Img -> new ImagemProdutoRespDto(Img)).toList();
+	}
+
+	public ProdutoResponseDto(Long id, String tipoUnidade, String nome, String descricao, Boolean ativo, Double peso,
 			Double largura, Double autura, Double profundidade, BigDecimal valorVenda, Integer qtdEstoque,
-			Integer qtdeAletaEstoque, Boolean alertaQtdEstoque, Integer qtdeClique, MarcaProduto marcaProduto,
-			CategoriaProduto categoriaProduto, PessoaJuridica empresa) {
+			Integer qtdeAletaEstoque, Boolean alertaQtdEstoque, Integer qtdeClique, MarcaProdutoDtoRef marcaProduto,
+			CategoriaProdutoDtoRef categoriaProduto) {
 		this.id = id;
 		this.tipoUnidade = tipoUnidade;
 		this.nome = nome;
@@ -81,7 +73,6 @@ public class Produto {
 		this.qtdeClique = qtdeClique;
 		this.marcaProduto = marcaProduto;
 		this.categoriaProduto = categoriaProduto;
-		this.empresa = empresa;
 	}
 
 	public Long getId() {
@@ -196,53 +187,28 @@ public class Produto {
 		this.qtdeClique = qtdeClique;
 	}
 
-	public MarcaProduto getMarcaProduto() {
+	public MarcaProdutoDtoRef getMarcaProduto() {
 		return marcaProduto;
 	}
 
-	public void setMarcaProduto(MarcaProduto marcaProduto) {
+	public void setMarcaProduto(MarcaProdutoDtoRef marcaProduto) {
 		this.marcaProduto = marcaProduto;
 	}
 
-	public CategoriaProduto getCategoriaProduto() {
+	public CategoriaProdutoDtoRef getCategoriaProduto() {
 		return categoriaProduto;
 	}
 
-	public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
+	public void setCategoriaProduto(CategoriaProdutoDtoRef categoriaProduto) {
 		this.categoriaProduto = categoriaProduto;
 	}
 
-	public PessoaJuridica getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(PessoaJuridica empresa) {
-		this.empresa = empresa;
-	}
-
-	public List<ImagemProduto> getImagemProdutos() {
+	public List<ImagemProdutoRespDto> getImagemProdutos() {
 		return imagemProdutos;
 	}
 
-	public List<AvaliacaoProduto> getAvaliacoes() {
-		return avaliacoes;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Produto other = (Produto) obj;
-		return Objects.equals(id, other.id);
+	public void setImagemProdutos(List<ImagemProdutoRespDto> imagemProdutos) {
+		this.imagemProdutos = imagemProdutos;
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.kaique.lojaVirtual.domain.dto;
 
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class EmailDTO {
