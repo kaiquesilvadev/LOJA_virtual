@@ -22,7 +22,7 @@ public class MarcaProdutoService {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public MarcaProduto buscaPorId(Long id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException("ID de código '" + id + "' não encontrado ."));
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("ID de marca com código '" + id + "' não encontrado ."));
 	}
 
 	@Transactional

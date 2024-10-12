@@ -1,7 +1,6 @@
 package com.kaique.lojaVirtual.domain.services;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +16,7 @@ import com.kaique.lojaVirtual.domain.entity.PessoaJuridica;
 import com.kaique.lojaVirtual.domain.entity.Produto;
 import com.kaique.lojaVirtual.domain.entity.Usuario;
 import com.kaique.lojaVirtual.domain.exceptions.EntidadeEmUsoException;
+import com.kaique.lojaVirtual.domain.exceptions.EntidadeExistenteException;
 import com.kaique.lojaVirtual.domain.exceptions.EntidadeNaoEncontradaException;
 import com.kaique.lojaVirtual.domain.exceptions.UsuarioNaoAutorisadoException;
 import com.kaique.lojaVirtual.domain.repositories.ProdutoRepository;
@@ -39,20 +39,45 @@ public class ProdutoService {
 	@Autowired
 	private CategoriaProdutoService categoriaProdutoService;
 
+	@Autowired
+	private ImagemProdutoService imgProdutoService;
+
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public Produto buscaPorId(Long id) {
 		return repository.findById(id)
 				.orElseThrow(() -> new EntidadeNaoEncontradaException("ID de código '" + id + "' não encontrado ."));
 	}
 
+	// TODO : so quem pode salvar um novo produto e um admim ou alguem que seja levantado como admim da empresa
+	// TODO : nao pode salvar um produto com o msm nome
 	@Transactional
 	public Produto Salva(ProdutoDtoRequest dto) {
-		return null;
+
+		List<ImagemProduto> imagemProdutos = new ArrayList<>();
+
+		Usuario usuario = validaAtualizaEsalvaProduto(dto);
+		Produto produto = convertdto(dto, new Produto(), usuario.getEmpresa());
+
+		for (int x = 0; x < dto.getImagemProdutos().size(); x++) {
+
+			imagemProdutos.add(imgProdutoService.convertdto(dto.getImagemProdutos().get(x), new ImagemProduto(),
+					usuario.getEmpresa(), produto));
+		}
+
+		produto.getImagemProdutos().addAll(imagemProdutos);
+		return repository.save(produto);
 	}
 
+	//TODO so quem pode atualizar um produto e o admim da empresa
 	@Transactional
 	public Produto atualizar(ProdutoDtoRequest dto, Long id) {
-		return null;
+		Produto produto = buscaPorId(id);
+		Usuario usuario = validaAtualizaEsalvaProduto(dto);
+
+		if (!usuario.getEmpresa().equals(produto.getEmpresa()))
+			throw new UsuarioNaoAutorisadoException("Você só pode atualiza um produto se for da sua propria empresa");
+
+		return repository.save(convertdto(dto, produto, usuario.getEmpresa()));
 	}
 
 	/*
@@ -78,6 +103,23 @@ public class ProdutoService {
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(id);
 		}
+	}
+
+	private Usuario validaAtualizaEsalvaProduto(ProdutoDtoRequest dto) {
+		Usuario usuario = detailsServices.authenticated();
+		Optional<Usuario> resultConsultaAcesso = usuarioService.buscaAcessoUsuario(usuario.getId(), "ROLE_ADMIN");
+
+		if (usuario.getEmpresa() == null)
+			throw new UsuarioNaoAutorisadoException(
+					"Apenas empresas cadastradas no sistema podem salvar ou atualizar uma produto");
+
+		if (repository.existsByNomeAndEmpresa(dto.getNome(), usuario.getEmpresa().getId()))
+			throw new EntidadeExistenteException("Produto com o nome '" + dto.getNome() + " já existene no sistema.");
+
+		if (resultConsultaAcesso.isEmpty())
+			throw new UsuarioNaoAutorisadoException("Apenas administradores podem adicionar ou salva um produto");
+
+		return usuario;
 	}
 
 	private Produto convertdto(ProdutoDtoRequest dto, Produto produto, PessoaJuridica pessoaJuridica) {

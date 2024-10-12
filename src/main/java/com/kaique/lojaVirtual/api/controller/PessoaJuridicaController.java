@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kaique.lojaVirtual.domain.dto.request.EnderecoPSFisicaRequestDto;
 import com.kaique.lojaVirtual.domain.dto.request.EnderecoRequestDto;
 import com.kaique.lojaVirtual.domain.dto.request.PessoaPjDtoReq;
 import com.kaique.lojaVirtual.domain.dto.response.EnderecoRespCustoDto;
