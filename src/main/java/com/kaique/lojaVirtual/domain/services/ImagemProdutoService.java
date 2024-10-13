@@ -35,14 +35,18 @@ public class ImagemProdutoService {
 				.orElseThrow(() -> new EntidadeNaoEncontradaException("ID de código '" + id + "' não encontrado ."));
 	}
 
-	/*TODO :img do produto so pode ser salva se o produto tiver menos de 6 imagem cadastradas ja.*/
+	/*
+	 * TODO :img do produto so pode ser salva se o produto tiver menos de 6 imagem
+	 * cadastradas ja.
+	 */
 	@Transactional
 	public ImagemProduto Salva(ImagemProdutoDto dto, Produto produto) {
 		Usuario usuario = detailsServices.authenticated();
 		Integer qtdImg = produtoRepository.quantidadeImg(produto.getId());
 
 		if (qtdImg >= 6)
-			throw new UsuarioNaoAutorisadoException("Não pode ser feita a inserção de uma nova imagem pois já existem 6 imagens cadastradas no sistema.");
+			throw new UsuarioNaoAutorisadoException(
+					"Não pode ser feita a inserção de uma nova imagem pois já existem 6 imagens cadastradas no sistema.");
 
 		if (usuario.getEmpresa() == null)
 			throw new UsuarioNaoAutorisadoException("Apenas empresas cadastradas no sistema podem salvar uma img");
@@ -51,20 +55,20 @@ public class ImagemProdutoService {
 		return repository.save(imagemProduto);
 	}
 
-	/*TODO : você só pode atualizar uma img da sua propria empresa */
+	/* TODO : você só pode atualizar uma img da sua propria empresa */
 	@Transactional
 	public ImagemProduto atualizar(ImagemProdutoDto dto, Long id, Produto produto) {
 		Usuario usuario = detailsServices.authenticated();
-		ImagemProduto img = buscaPorId(id);		
-		
+		ImagemProduto img = buscaPorId(id);
+
 		if (usuario.getEmpresa() == null)
 			throw new UsuarioNaoAutorisadoException("Apenas empresas cadastradas no sistema podem atualizar uma img");
-		
-		if(!usuario.getEmpresa().equals(img.getEmpresa()))
+
+		if (!usuario.getEmpresa().equals(img.getEmpresa()))
 			throw new UsuarioNaoAutorisadoException("Apenas a propria empresa pode atualizar sua propria imagem.");
-		
+
 		ImagemProduto produtoAtualizado = convertdto(dto, img, img.getEmpresa(), img.getProduto());
-		
+
 		return repository.save(produtoAtualizado);
 	}
 
@@ -73,12 +77,12 @@ public class ImagemProdutoService {
 	public void deletar(Long id) {
 
 		Usuario usuario = detailsServices.authenticated();
-		ImagemProduto img = buscaPorId(id);		
-		
+		ImagemProduto img = buscaPorId(id);
+
 		if (usuario.getEmpresa() == null)
 			throw new UsuarioNaoAutorisadoException("Apenas empresas cadastradas no sistema podem apagar uma img");
-		
-		if(!usuario.getEmpresa().equals(img.getEmpresa()))
+
+		if (!usuario.getEmpresa().equals(img.getEmpresa()))
 			throw new UsuarioNaoAutorisadoException("Apenas a propria empresa pode apagar sua propria imagem.");
 
 		try {
@@ -86,6 +90,11 @@ public class ImagemProdutoService {
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(id);
 		}
+	}
+
+	@Transactional
+	public void deletaTodasImg(Long idProduto) {
+		repository.deletaTodaImgPorIdProduto(idProduto);
 	}
 
 	protected ImagemProduto convertdto(ImagemProdutoDto dto, ImagemProduto imagemProduto, PessoaJuridica juridica,

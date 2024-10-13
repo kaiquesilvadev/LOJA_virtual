@@ -51,7 +51,7 @@ public class Produto {
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ImagemProduto> imagemProdutos = new ArrayList<>();
 
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
 	private List<AvaliacaoProduto> avaliacoes = new ArrayList<>();
 
 	@ManyToOne
