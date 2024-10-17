@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import com.kaique.lojaVirtual.domain.enuns.StatusContaPagar;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -33,7 +34,7 @@ public class ContaPagar {
 	@Enumerated(EnumType.STRING)
 	private StatusContaPagar status;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pessoa_fornecedo_id")
 	private PessoaJuridica pessoaFornecedo;
 
@@ -45,7 +46,7 @@ public class ContaPagar {
 	@JoinColumn(name = "nota_fiscal_compra_id")
 	private NotaFiscalCompra notaFiscalCompra;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;
 

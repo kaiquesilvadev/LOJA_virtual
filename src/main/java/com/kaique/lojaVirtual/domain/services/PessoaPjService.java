@@ -15,7 +15,7 @@ import com.kaique.lojaVirtual.domain.exceptions.EntidadeNaoEncontradaException;
 import com.kaique.lojaVirtual.domain.repositories.PessoaJuridicaRepository;
 
 @Service
-public class PessoaPjServives {
+public class PessoaPjService {
 
 	@Autowired
 	private PessoaJuridicaRepository repository;
@@ -29,7 +29,7 @@ public class PessoaPjServives {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public PessoaJuridica buscaPorId(Long id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException("ID de código '" + id + "' não encontrado ."));
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("ID de código de pj com '" + id + "' não encontrado ."));
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)

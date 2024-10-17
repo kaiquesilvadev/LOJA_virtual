@@ -1,4 +1,4 @@
-package com.kaique.lojaVirtual.domain.services;
+package com.kaique.lojaVirtual.domain.tarefaAutomatizada;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,9 +12,10 @@ import org.thymeleaf.context.Context;
 import com.kaique.lojaVirtual.domain.dto.EmailDTO;
 import com.kaique.lojaVirtual.domain.entity.Usuario;
 import com.kaique.lojaVirtual.domain.repositories.UsuarioRepository;
+import com.kaique.lojaVirtual.domain.services.EmailService;
 
 @Service
-public class TarefaAutomatizadaService {
+public class TarefaUsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;

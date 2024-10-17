@@ -19,7 +19,7 @@ import com.kaique.lojaVirtual.domain.dto.response.EnderecoRespCustoDto;
 import com.kaique.lojaVirtual.domain.dto.response.EnderecoResponseDto;
 import com.kaique.lojaVirtual.domain.dto.response.PessoaPjResponse;
 import com.kaique.lojaVirtual.domain.services.PessoaEnderecoService;
-import com.kaique.lojaVirtual.domain.services.PessoaPjServives;
+import com.kaique.lojaVirtual.domain.services.PessoaPjService;
 
 import jakarta.validation.Valid;
 
@@ -31,7 +31,7 @@ public class PessoaJuridicaController {
 	private PessoaEnderecoService psEnderecoService;
 
 	@Autowired
-	private PessoaPjServives servives;
+	private PessoaPjService servives;
 
 	@GetMapping("/buscaPorNome/{nome}")
 	public List<PessoaPjResponse> buscaPorNome(@PathVariable String nome) {
