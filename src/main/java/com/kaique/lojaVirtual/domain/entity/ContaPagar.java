@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import com.kaique.lojaVirtual.domain.enuns.StatusContaPagar;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -33,23 +34,19 @@ public class ContaPagar {
 	@Enumerated(EnumType.STRING)
 	private StatusContaPagar status;
 
-	@ManyToOne
-	@JoinColumn(name = "pessoa_id")
-	private Pessoa pessoa;
-
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pessoa_fornecedo_id")
-	private Pessoa pessoaFornecedo;
+	private PessoaJuridica pessoaFornecedo;
 
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
-	private Pessoa empresa;
+	private PessoaJuridica empresa;
 
 	@OneToOne
 	@JoinColumn(name = "nota_fiscal_compra_id")
 	private NotaFiscalCompra notaFiscalCompra;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;
 
@@ -57,7 +54,7 @@ public class ContaPagar {
 	}
 
 	public ContaPagar(Long id, String descricao, BigDecimal valortotal, BigDecimal valorDesconto, Date dtVencimento,
-			Date dtPagamento, StatusContaPagar status, Pessoa pessoa, Pessoa pessoaFornecedo, Pessoa empresa,
+			Date dtPagamento, StatusContaPagar status, PessoaJuridica pessoaFornecedo, PessoaJuridica empresa,
 			NotaFiscalCompra notaFiscalCompra, Endereco endereco) {
 		this.id = id;
 		this.descricao = descricao;
@@ -66,7 +63,6 @@ public class ContaPagar {
 		this.dtVencimento = dtVencimento;
 		this.dtPagamento = dtPagamento;
 		this.status = status;
-		this.pessoa = pessoa;
 		this.pessoaFornecedo = pessoaFornecedo;
 		this.empresa = empresa;
 		this.notaFiscalCompra = notaFiscalCompra;
@@ -129,27 +125,19 @@ public class ContaPagar {
 		this.status = status;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
-	public Pessoa getPessoaFornecedo() {
+	public PessoaJuridica getPessoaFornecedo() {
 		return pessoaFornecedo;
 	}
 
-	public void setPessoaFornecedo(Pessoa pessoaFornecedo) {
+	public void setPessoaFornecedo(PessoaJuridica pessoaFornecedo) {
 		this.pessoaFornecedo = pessoaFornecedo;
 	}
 
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 
-	public void setEmpresa(Pessoa empresa) {
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
 

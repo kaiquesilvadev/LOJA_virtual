@@ -44,7 +44,7 @@ public class ProdutoService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public Produto buscaPorId(Long id) {
-		return repository.findById(id)
+		return repository.buscaPorId(id)
 				.orElseThrow(() -> new EntidadeNaoEncontradaException("ID de código '" + id + "' não encontrado ."));
 	}
 
@@ -71,12 +71,24 @@ public class ProdutoService {
 	//TODO so quem pode atualizar um produto e o admim da empresa
 	@Transactional
 	public Produto atualizar(ProdutoDtoRequest dto, Long id) {
+		
+		List<ImagemProduto> imagemProdutos = new ArrayList<>();
+		
 		Produto produto = buscaPorId(id);
+		produto.getImagemProdutos().clear();
 		Usuario usuario = validaAtualizaEsalvaProduto(dto);
+		imgProdutoService.deletaTodasImg(produto.getId());
 
 		if (!usuario.getEmpresa().equals(produto.getEmpresa()))
 			throw new UsuarioNaoAutorisadoException("Você só pode atualiza um produto se for da sua propria empresa");
+		
+		for (int x = 0; x < dto.getImagemProdutos().size(); x++) {
 
+			imagemProdutos.add(imgProdutoService.convertdto(dto.getImagemProdutos().get(x), new ImagemProduto(),
+					usuario.getEmpresa(), produto));
+		}
+
+		produto.getImagemProdutos().addAll(imagemProdutos);
 		return repository.save(convertdto(dto, produto, usuario.getEmpresa()));
 	}
 

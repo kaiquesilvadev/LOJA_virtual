@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kaique.lojaVirtual.domain.dto.request.ProdutoDtoRequest;
 import com.kaique.lojaVirtual.domain.dto.response.ProdutoResponseDto;
-import com.kaique.lojaVirtual.domain.entity.Produto;
 import com.kaique.lojaVirtual.domain.services.ProdutoService;
 
 import jakarta.validation.Valid;
