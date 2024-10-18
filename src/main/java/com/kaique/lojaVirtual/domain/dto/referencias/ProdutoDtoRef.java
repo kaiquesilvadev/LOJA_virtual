@@ -7,6 +7,10 @@ public class ProdutoDtoRef {
 	@NotNull
 	private Long id;
 
+	public ProdutoDtoRef(@NotNull Long id) {
+		this.id = id;
+	}
+
 	public Long getId() {
 		return id;
 	}

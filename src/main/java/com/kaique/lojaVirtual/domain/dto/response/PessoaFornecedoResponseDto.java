@@ -1,30 +1,31 @@
-package com.kaique.lojaVirtual.domain.dto.request;
+package com.kaique.lojaVirtual.domain.dto.response;
 
-import org.hibernate.validator.constraints.br.CNPJ;
+import com.kaique.lojaVirtual.domain.entity.PessoaJuridica;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+public class PessoaFornecedoResponseDto {
 
-public class pessoaFornecedoDto {
-
-	@NotBlank
+	private Long id;
 	private String nome;
-
-	@Email
 	private String email;
-
-	@NotBlank
-	@Size(max = 11, min = 10)
 	private String telefone;
-
-	@CNPJ
 	private String cnpj;
-
-	@NotBlank
 	private String nomeFantasia;
 
-	public pessoaFornecedoDto() {
+	public PessoaFornecedoResponseDto(PessoaJuridica pessoaJuridica) {
+		this.id = pessoaJuridica.getId();
+		this.nome = pessoaJuridica.getNome();
+		this.email = pessoaJuridica.getEmail();
+		this.telefone = pessoaJuridica.getTelefone();
+		this.cnpj = pessoaJuridica.getCnpj();
+		this.nomeFantasia = pessoaJuridica.getNomeFantasia();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {

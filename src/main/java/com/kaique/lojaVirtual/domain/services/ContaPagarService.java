@@ -48,11 +48,11 @@ public class ContaPagarService {
 	public ContaPagar salva(ContaPagarRequestDto dto) {
 
 		Usuario usuario = detailsServices.authenticated();
-		Endereco endereco = enderecoService.converteEndereco(dto.getEndereco(), usuario.getPessoa(), usuario.getEmpresa(), new Endereco());
-
+		
 		if (usuario.getEmpresa() == null)
 			throw new UsuarioNaoAutorisadoException("Apenas empresas cadastradas no sistema podem adicionar uma conta a pagar");
 
+		Endereco endereco = enderecoService.converteEndereco(dto.getEndereco(), usuario.getPessoa(), usuario.getEmpresa(), new Endereco());
 		/*TODO : add depois notaFiscalCompra */
 		ContaPagar contaPagar = converteDto(dto, new ContaPagar(), usuario.getEmpresa(), null, endereco);
 
@@ -92,6 +92,7 @@ public class ContaPagarService {
 		ContaPagar.setStatus(StatusContaPagar.ABERTA);
 		/* TODO : falta ainda add o notaFiscalCompra */
 		ContaPagar.setEndereco(endereco);
+		ContaPagar.setEmpresa(empresa);;
 
 		PessoaJuridica pessoaFornecedo = new PessoaJuridica();
 		pessoaFornecedo.setNome(dto.getPessoaFornecedoDto().getNome());
