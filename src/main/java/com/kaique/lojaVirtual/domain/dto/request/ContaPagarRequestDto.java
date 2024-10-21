@@ -6,6 +6,7 @@ import java.sql.Date;
 import com.kaique.lojaVirtual.domain.dto.referencias.EmpresaRefDto;
 import com.kaique.lojaVirtual.domain.dto.referencias.PessoaRefDto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,15 +33,15 @@ public class ContaPagarRequestDto {
 	@NotNull
 	private Date dtPagamento;
 
+	@Valid
 	@NotNull
-	private pessoaFornecedoDto pessoaFornecedoDto;
+	private PessoaFornecedoRequestDto PessoaFornecedoRequestDto;
 
-	@NotNull
-	private PessoaRefDto empresa;
 
 	/* TODO : colocar depois o dto de notaFiscalCompra */
 	// private NotaFiscalCompra notaFiscalCompra;
 
+	@Valid
 	@NotNull
 	private EnderecoRequestDto endereco;
 
@@ -84,20 +85,12 @@ public class ContaPagarRequestDto {
 		this.dtPagamento = dtPagamento;
 	}
 
-	public pessoaFornecedoDto getPessoaFornecedoDto() {
-		return pessoaFornecedoDto;
+	public PessoaFornecedoRequestDto getPessoaFornecedoDto() {
+		return PessoaFornecedoRequestDto;
 	}
 
-	public void setPessoaFornecedoDto(pessoaFornecedoDto pessoaFornecedoDto) {
-		this.pessoaFornecedoDto = pessoaFornecedoDto;
-	}
-
-	public PessoaRefDto getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(PessoaRefDto empresa) {
-		this.empresa = empresa;
+	public void setPessoaFornecedoDto(PessoaFornecedoRequestDto PessoaFornecedoRequestDto) {
+		this.PessoaFornecedoRequestDto = PessoaFornecedoRequestDto;
 	}
 
 	public EnderecoRequestDto getEndereco() {
