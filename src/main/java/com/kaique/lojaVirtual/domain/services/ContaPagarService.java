@@ -12,6 +12,7 @@ import com.kaique.lojaVirtual.domain.dto.request.ContaPagarRequestDto;
 import com.kaique.lojaVirtual.domain.entity.ContaPagar;
 import com.kaique.lojaVirtual.domain.entity.Endereco;
 import com.kaique.lojaVirtual.domain.entity.NotaFiscalCompra;
+import com.kaique.lojaVirtual.domain.entity.Pessoa;
 import com.kaique.lojaVirtual.domain.entity.PessoaJuridica;
 import com.kaique.lojaVirtual.domain.entity.Usuario;
 import com.kaique.lojaVirtual.domain.enuns.StatusContaPagar;
@@ -19,7 +20,6 @@ import com.kaique.lojaVirtual.domain.exceptions.EntidadeEmUsoException;
 import com.kaique.lojaVirtual.domain.exceptions.EntidadeNaoEncontradaException;
 import com.kaique.lojaVirtual.domain.exceptions.UsuarioNaoAutorisadoException;
 import com.kaique.lojaVirtual.domain.repositories.ContaPagarRepository;
-import com.kaique.lojaVirtual.domain.repositories.UsuarioRepository;
 
 @Service
 public class ContaPagarService {
@@ -54,7 +54,7 @@ public class ContaPagarService {
 
 		Endereco endereco = enderecoService.converteEndereco(dto.getEndereco(), usuario.getPessoa(), usuario.getEmpresa(), new Endereco());
 		/*TODO : add depois notaFiscalCompra */
-		ContaPagar contaPagar = converteDto(dto, new ContaPagar(), usuario.getEmpresa(), null, endereco);
+		ContaPagar contaPagar = converteDto(dto, new ContaPagar(), usuario.getEmpresa(), endereco , usuario.getPessoa());
 
 		return repository.save(contaPagar);
 	}
@@ -81,8 +81,7 @@ public class ContaPagarService {
 		}
 	}
 	
-	private ContaPagar converteDto(ContaPagarRequestDto dto, ContaPagar ContaPagar, PessoaJuridica empresa,
-			NotaFiscalCompra notaFiscalCompra, Endereco endereco) {
+	private ContaPagar converteDto(ContaPagarRequestDto dto, ContaPagar ContaPagar, PessoaJuridica empresa, Endereco endereco , Pessoa pessoa) {
 
 		ContaPagar.setDescricao(dto.getDescricao());
 		ContaPagar.setValortotal(dto.getValortotal());
@@ -90,19 +89,31 @@ public class ContaPagarService {
 		ContaPagar.setDtVencimento(dto.getDtVencimento());
 		ContaPagar.setDtPagamento(dto.getDtPagamento());
 		ContaPagar.setStatus(StatusContaPagar.ABERTA);
-		/* TODO : falta ainda add o notaFiscalCompra */
 		ContaPagar.setEndereco(endereco);
-		ContaPagar.setEmpresa(empresa);;
+		ContaPagar.setEmpresa(empresa);
+		
+		NotaFiscalCompra notaFiscalCompra = new NotaFiscalCompra();
+		notaFiscalCompra.setNumeroNota(dto.getNotaFiscalCompra().getNumeroNota());
+		notaFiscalCompra.setSerieNota(dto.getNotaFiscalCompra().getSerieNota());
+		notaFiscalCompra.setDescricaoOds(dto.getNotaFiscalCompra().getDescricaoOds());
+		notaFiscalCompra.setValorTotal(dto.getNotaFiscalCompra().getValorTotal());
+		notaFiscalCompra.setValorDesconto(dto.getNotaFiscalCompra().getValorDesconto());
+		notaFiscalCompra.setValorIcms(dto.getNotaFiscalCompra().getValorIcms());
+		notaFiscalCompra.setPessoa(pessoa);
+		notaFiscalCompra.setEmpresa(empresa);
+		
+		ContaPagar.setNotaFiscalCompra(notaFiscalCompra);
 
 		PessoaJuridica pessoaFornecedo = new PessoaJuridica();
-		pessoaFornecedo.setNome(dto.getPessoaFornecedoDto().getNome());
-		pessoaFornecedo.setEmail(dto.getPessoaFornecedoDto().getEmail());
-		pessoaFornecedo.setTelefone(dto.getPessoaFornecedoDto().getTelefone());
-		pessoaFornecedo.setCnpj(dto.getPessoaFornecedoDto().getCnpj());
-		pessoaFornecedo.setNomeFantasia(dto.getPessoaFornecedoDto().getNomeFantasia());
+		pessoaFornecedo.setNome(dto.getPessoaFornecedo().getNome());
+		pessoaFornecedo.setEmail(dto.getPessoaFornecedo().getEmail());
+		pessoaFornecedo.setTelefone(dto.getPessoaFornecedo().getTelefone());
+		pessoaFornecedo.setCnpj(dto.getPessoaFornecedo().getCnpj());
+		pessoaFornecedo.setNomeFantasia(dto.getPessoaFornecedo().getNomeFantasia());
 
 		ContaPagar.setPessoaFornecedo(pessoaFornecedo);
 
 		return ContaPagar;
 	}
+	
 }

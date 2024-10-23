@@ -42,7 +42,7 @@ public class ContaPagar {
 	@JoinColumn(name = "empresa_id")
 	private PessoaJuridica empresa;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "nota_fiscal_compra_id")
 	private NotaFiscalCompra notaFiscalCompra;
 

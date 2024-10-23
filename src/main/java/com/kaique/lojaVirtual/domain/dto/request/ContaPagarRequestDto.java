@@ -3,9 +3,6 @@ package com.kaique.lojaVirtual.domain.dto.request;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import com.kaique.lojaVirtual.domain.dto.referencias.EmpresaRefDto;
-import com.kaique.lojaVirtual.domain.dto.referencias.PessoaRefDto;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -35,11 +32,11 @@ public class ContaPagarRequestDto {
 
 	@Valid
 	@NotNull
-	private PessoaFornecedoRequestDto PessoaFornecedoRequestDto;
+	private PessoaFornecedoRequestDto pessoaFornecedo;
 
-
-	/* TODO : colocar depois o dto de notaFiscalCompra */
-	// private NotaFiscalCompra notaFiscalCompra;
+	@Valid
+	@NotNull
+	private NotaFiscalCompraResponseDto notaFiscalCompra;
 
 	@Valid
 	@NotNull
@@ -85,12 +82,20 @@ public class ContaPagarRequestDto {
 		this.dtPagamento = dtPagamento;
 	}
 
-	public PessoaFornecedoRequestDto getPessoaFornecedoDto() {
-		return PessoaFornecedoRequestDto;
+	public PessoaFornecedoRequestDto getPessoaFornecedo() {
+		return pessoaFornecedo;
 	}
 
-	public void setPessoaFornecedoDto(PessoaFornecedoRequestDto PessoaFornecedoRequestDto) {
-		this.PessoaFornecedoRequestDto = PessoaFornecedoRequestDto;
+	public void setPessoaFornecedo(PessoaFornecedoRequestDto pessoaFornecedo) {
+		this.pessoaFornecedo = pessoaFornecedo;
+	}
+
+	public NotaFiscalCompraResponseDto getNotaFiscalCompra() {
+		return notaFiscalCompra;
+	}
+
+	public void setNotaFiscalCompra(NotaFiscalCompraResponseDto notaFiscalCompra) {
+		this.notaFiscalCompra = notaFiscalCompra;
 	}
 
 	public EnderecoRequestDto getEndereco() {
@@ -100,5 +105,4 @@ public class ContaPagarRequestDto {
 	public void setEndereco(EnderecoRequestDto endereco) {
 		this.endereco = endereco;
 	}
-
 }

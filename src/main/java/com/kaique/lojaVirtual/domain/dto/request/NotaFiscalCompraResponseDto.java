@@ -19,8 +19,7 @@ public class NotaFiscalCompraResponseDto {
 	private BigDecimal valorDesconto;
 	private BigDecimal valorIcms;
 	private OffsetDateTime dataCompra;
-	private PessoaRefDto pessoa;
-	private PessoaRefDto empresa;
+;
 	private List<NotaItemProdutoDtoResponce> notaItemProdutos = new ArrayList<>();
 
 	public NotaFiscalCompraResponseDto() {
@@ -35,8 +34,6 @@ public class NotaFiscalCompraResponseDto {
 		this.valorDesconto = notaFiscalCompra.getValorDesconto();
 		this.valorIcms = notaFiscalCompra.getValorIcms();
 		this.dataCompra = notaFiscalCompra.getDataCompra();
-		this.pessoa = new PessoaRefDto(notaFiscalCompra.getPessoa());
-		this.empresa = new PessoaRefDto(notaFiscalCompra.getEmpresa());
 		this.notaItemProdutos = notaFiscalCompra.getNotaItemProdutos().stream()
 				.map(x -> new NotaItemProdutoDtoResponce(x)).toList();
 	}
@@ -103,22 +100,6 @@ public class NotaFiscalCompraResponseDto {
 
 	public void setDataCompra(OffsetDateTime dataCompra) {
 		this.dataCompra = dataCompra;
-	}
-
-	public PessoaRefDto getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(PessoaRefDto pessoa) {
-		this.pessoa = pessoa;
-	}
-
-	public PessoaRefDto getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(PessoaRefDto empresa) {
-		this.empresa = empresa;
 	}
 
 	public List<NotaItemProdutoDtoResponce> getNotaItemProdutos() {

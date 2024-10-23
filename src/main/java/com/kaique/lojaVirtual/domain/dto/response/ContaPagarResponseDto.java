@@ -19,7 +19,7 @@ public class ContaPagarResponseDto {
 	private StatusContaPagar status;
 	private PessoaFornecedoResponseDto pessoaFornecedo;
 	private PessoaRefDto empresa;
-	// private NotaFiscalCompraResponseDto notaFiscalCompra;
+	private NotaFiscalCompraResponseDto notaFiscalCompra;
 	private EnderecoRespCustoDto endereco;
 
 	public ContaPagarResponseDto() {
@@ -35,8 +35,7 @@ public class ContaPagarResponseDto {
 		this.status = contaPagar.getStatus();
 		this.pessoaFornecedo = new PessoaFornecedoResponseDto(contaPagar.getPessoaFornecedo());
 		this.empresa = new PessoaRefDto(contaPagar.getEmpresa().getId(), contaPagar.getEmpresa().getNome());
-		// this.notaFiscalCompra = new
-		// NotaFiscalCompraResponseDto(contaPagar.getNotaFiscalCompra());
+		this.notaFiscalCompra = new NotaFiscalCompraResponseDto(contaPagar.getNotaFiscalCompra());
 		this.endereco = new EnderecoRespCustoDto(contaPagar.getEndereco());
 	}
 
@@ -112,15 +111,13 @@ public class ContaPagarResponseDto {
 		this.empresa = empresa;
 	}
 
-	/*
-	 * public NotaFiscalCompraResponseDto getNotaFiscalCompra() { return
-	 * notaFiscalCompra; }
-	 */
+	public NotaFiscalCompraResponseDto getNotaFiscalCompra() {
+		return notaFiscalCompra;
+	}
 
-	/*
-	 * public void setNotaFiscalCompra(NotaFiscalCompraResponseDto notaFiscalCompra)
-	 * { this.notaFiscalCompra = notaFiscalCompra; }
-	 */
+	public void setNotaFiscalCompra(NotaFiscalCompraResponseDto notaFiscalCompra) {
+		this.notaFiscalCompra = notaFiscalCompra;
+	}
 
 	public EnderecoRespCustoDto getEndereco() {
 		return endereco;
